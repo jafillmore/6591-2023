@@ -37,7 +37,7 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private static final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -48,6 +48,8 @@ public class RobotContainer {
   public RobotContainer() {
     // Configure the button bindings
     configureButtonBindings();
+
+   
 
     // Configure default commands
     m_robotDrive.setDefaultCommand(
@@ -61,90 +63,7 @@ public class RobotContainer {
                 true),
             m_robotDrive));
 
-             /* Display 6-axis Processed Angle Data                                      */
-             SmartDashboard.putBoolean(  "IMU_Connected",        m_robotDrive.m_gyro.isConnected());
-             SmartDashboard.putBoolean(  "IMU_IsCalibrating",    m_robotDrive.m_gyro.isCalibrating());
-             SmartDashboard.putNumber(   "IMU_Yaw",              m_robotDrive.m_gyro.getYaw());
-             SmartDashboard.putNumber(   "IMU_Pitch",            m_robotDrive.m_gyro.getPitch());
-             SmartDashboard.putNumber(   "IMU_Roll",             m_robotDrive.m_gyro.getRoll());
              
-             /* Display tilt-corrected, Magnetometer-based heading (requires             */
-             /* magnetometer calibration to be useful)                                   */
-             
-             SmartDashboard.putNumber(   "IMU_CompassHeading",   m_robotDrive.m_gyro.getCompassHeading());
-             
-             /* Display 9-axis Heading (requires magnetometer calibration to be useful)  */
-             SmartDashboard.putNumber(   "IMU_FusedHeading",     m_robotDrive.m_gyro.getFusedHeading());
-   
-             /* These functions are compatible w/the WPI Gyro Class, providing a simple  */
-             /* path for upgrading from the Kit-of-Parts gyro to the navx-MXP            */
-             
-             SmartDashboard.putNumber(   "IMU_TotalYaw",         m_robotDrive.m_gyro.getAngle());
-             SmartDashboard.putNumber(   "IMU_YawRateDPS",       m_robotDrive.m_gyro.getRate());
-   
-             /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
-             
-             SmartDashboard.putNumber(   "IMU_Accel_X",          m_robotDrive.m_gyro.getWorldLinearAccelX());
-             SmartDashboard.putNumber(   "IMU_Accel_Y",          m_robotDrive.m_gyro.getWorldLinearAccelY());
-             SmartDashboard.putBoolean(  "IMU_IsMoving",         m_robotDrive.m_gyro.isMoving());
-             SmartDashboard.putBoolean(  "IMU_IsRotating",       m_robotDrive.m_gyro.isRotating());
-   
-             /* Display estimates of velocity/displacement.  Note that these values are  */
-             /* not expected to be accurate enough for estimating robot position on a    */
-             /* FIRST FRC Robotics Field, due to accelerometer noise and the compounding */
-             /* of these errors due to single (velocity) integration and especially      */
-             /* double (displacement) integration.                                       */
-             
-             SmartDashboard.putNumber(   "Velocity_X",           m_robotDrive.m_gyro.getVelocityX());
-             SmartDashboard.putNumber(   "Velocity_Y",           m_robotDrive.m_gyro.getVelocityY());
-             SmartDashboard.putNumber(   "Displacement_X",       m_robotDrive.m_gyro.getDisplacementX());
-             SmartDashboard.putNumber(   "Displacement_Y",       m_robotDrive.m_gyro.getDisplacementY());
-             
-             /* Display Raw Gyro/Accelerometer/Magnetometer Values                       */
-             /* NOTE:  These values are not normally necessary, but are made available   */
-             /* for advanced users.  Before using this data, please consider whether     */
-             /* the processed data (see above) will suit your needs.                     */
-             
-             SmartDashboard.putNumber(   "RawGyro_X",            m_robotDrive.m_gyro.getRawGyroX());
-             SmartDashboard.putNumber(   "RawGyro_Y",            m_robotDrive.m_gyro.getRawGyroY());
-             SmartDashboard.putNumber(   "RawGyro_Z",            m_robotDrive.m_gyro.getRawGyroZ());
-             SmartDashboard.putNumber(   "RawAccel_X",           m_robotDrive.m_gyro.getRawAccelX());
-             SmartDashboard.putNumber(   "RawAccel_Y",           m_robotDrive.m_gyro.getRawAccelY());
-             SmartDashboard.putNumber(   "RawAccel_Z",           m_robotDrive.m_gyro.getRawAccelZ());
-             SmartDashboard.putNumber(   "RawMag_X",             m_robotDrive.m_gyro.getRawMagX());
-             SmartDashboard.putNumber(   "RawMag_Y",             m_robotDrive.m_gyro.getRawMagY());
-             SmartDashboard.putNumber(   "RawMag_Z",             m_robotDrive.m_gyro.getRawMagZ());
-             SmartDashboard.putNumber(   "IMU_Temp_C",           m_robotDrive.m_gyro.getTempC());
-             
-             /* Omnimount Yaw Axis Information                                           */
-             /* For more info, see http://navx-mxp.kauailabs.com/installation/omnimount  */
-             AHRS.BoardYawAxis yaw_axis = m_robotDrive.m_gyro.getBoardYawAxis();
-             SmartDashboard.putString(   "YawAxisDirection",     yaw_axis.up ? "Up" : "Down" );
-             SmartDashboard.putNumber(   "YawAxis",              yaw_axis.board_axis.getValue() );
-             
-             /* Sensor Board Information                                                 */
-             SmartDashboard.putString(   "FirmwareVersion",      m_robotDrive.m_gyro.getFirmwareVersion());
-             
-             /* Quaternion Data                                                          */
-             /* Quaternions are fascinating, and are the most compact representation of  */
-             /* orientation data.  All of the Yaw, Pitch and Roll Values can be derived  */
-             /* from the Quaternions.  If interested in motion processing, knowledge of  */
-             /* Quaternions is highly recommended.                                       */
-             SmartDashboard.putNumber(   "QuaternionW",          m_robotDrive.m_gyro.getQuaternionW());
-             SmartDashboard.putNumber(   "QuaternionX",          m_robotDrive.m_gyro.getQuaternionX());
-             SmartDashboard.putNumber(   "QuaternionY",          m_robotDrive.m_gyro.getQuaternionY());
-             SmartDashboard.putNumber(   "QuaternionZ",          m_robotDrive.m_gyro.getQuaternionZ());
-             
-             /* Connectivity Debugging Support                                           */
-             SmartDashboard.putNumber(   "IMU_Byte_Count",       m_robotDrive.m_gyro.getByteCount());
-             SmartDashboard.putNumber(   "IMU_Update_Count",     m_robotDrive.m_gyro.getUpdateCount());
-
-             /* Swerve Drive Module Positions */
-             SmartDashboard.putNumber("Front Left Turn Angle", m_robotDrive.m_frontLeft.m_turningEncoder.getPosition());
-             SmartDashboard.putNumber("Front Right Turn Angle", m_robotDrive.m_frontRight.m_turningEncoder.getPosition());
-             SmartDashboard.putNumber("Rear Left Turn Angle", m_robotDrive.m_rearLeft.m_turningEncoder.getPosition());
-             SmartDashboard.putNumber("Rear Right Turn Angle", m_robotDrive.m_rearRight.m_turningEncoder.getPosition());
-
   }
 
   /**
@@ -161,6 +80,7 @@ public class RobotContainer {
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
+
   }
 
   /**
@@ -208,4 +128,95 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
+
+    public static void updateDash() {
+    /* Display 6-axis Processed Angle Data                                      */
+    SmartDashboard.putBoolean(  "IMU_Connected",        m_robotDrive.m_gyro.isConnected());
+    SmartDashboard.putBoolean(  "IMU_IsCalibrating",    m_robotDrive.m_gyro.isCalibrating());
+    SmartDashboard.putNumber(   "IMU_Yaw",              m_robotDrive.m_gyro.getYaw());
+    SmartDashboard.putNumber(   "IMU_Pitch",            m_robotDrive.m_gyro.getPitch());
+    SmartDashboard.putNumber(   "IMU_Roll",             m_robotDrive.m_gyro.getRoll());
+    
+    /* Display tilt-corrected, Magnetometer-based heading (requires             */
+    /* magnetometer calibration to be useful)                                   */
+    
+    SmartDashboard.putNumber(   "IMU_CompassHeading",   m_robotDrive.m_gyro.getCompassHeading());
+    
+    /* Display 9-axis Heading (requires magnetometer calibration to be useful)  */
+    SmartDashboard.putNumber(   "IMU_FusedHeading",     m_robotDrive.m_gyro.getFusedHeading());
+
+    /* These functions are compatible w/the WPI Gyro Class, providing a simple  */
+    /* path for upgrading from the Kit-of-Parts gyro to the navx-MXP            */
+    
+    SmartDashboard.putNumber(   "IMU_TotalYaw",         m_robotDrive.m_gyro.getAngle());
+    SmartDashboard.putNumber(   "IMU_YawRateDPS",       m_robotDrive.m_gyro.getRate());
+
+    /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
+    
+    SmartDashboard.putNumber(   "IMU_Accel_X",          m_robotDrive.m_gyro.getWorldLinearAccelX());
+    SmartDashboard.putNumber(   "IMU_Accel_Y",          m_robotDrive.m_gyro.getWorldLinearAccelY());
+    SmartDashboard.putBoolean(  "IMU_IsMoving",         m_robotDrive.m_gyro.isMoving());
+    SmartDashboard.putBoolean(  "IMU_IsRotating",       m_robotDrive.m_gyro.isRotating());
+
+    /* Display estimates of velocity/displacement.  Note that these values are  */
+    /* not expected to be accurate enough for estimating robot position on a    */
+    /* FIRST FRC Robotics Field, due to accelerometer noise and the compounding */
+    /* of these errors due to single (velocity) integration and especially      */
+    /* double (displacement) integration.                                       */
+    
+    SmartDashboard.putNumber(   "Velocity_X",           m_robotDrive.m_gyro.getVelocityX());
+    SmartDashboard.putNumber(   "Velocity_Y",           m_robotDrive.m_gyro.getVelocityY());
+    SmartDashboard.putNumber(   "Displacement_X",       m_robotDrive.m_gyro.getDisplacementX());
+    SmartDashboard.putNumber(   "Displacement_Y",       m_robotDrive.m_gyro.getDisplacementY());
+    
+    /* Display Raw Gyro/Accelerometer/Magnetometer Values                       */
+    /* NOTE:  These values are not normally necessary, but are made available   */
+    /* for advanced users.  Before using this data, please consider whether     */
+    /* the processed data (see above) will suit your needs.                     */
+    
+    SmartDashboard.putNumber(   "RawGyro_X",            m_robotDrive.m_gyro.getRawGyroX());
+    SmartDashboard.putNumber(   "RawGyro_Y",            m_robotDrive.m_gyro.getRawGyroY());
+    SmartDashboard.putNumber(   "RawGyro_Z",            m_robotDrive.m_gyro.getRawGyroZ());
+    SmartDashboard.putNumber(   "RawAccel_X",           m_robotDrive.m_gyro.getRawAccelX());
+    SmartDashboard.putNumber(   "RawAccel_Y",           m_robotDrive.m_gyro.getRawAccelY());
+    SmartDashboard.putNumber(   "RawAccel_Z",           m_robotDrive.m_gyro.getRawAccelZ());
+    SmartDashboard.putNumber(   "RawMag_X",             m_robotDrive.m_gyro.getRawMagX());
+    SmartDashboard.putNumber(   "RawMag_Y",             m_robotDrive.m_gyro.getRawMagY());
+    SmartDashboard.putNumber(   "RawMag_Z",             m_robotDrive.m_gyro.getRawMagZ());
+    SmartDashboard.putNumber(   "IMU_Temp_C",           m_robotDrive.m_gyro.getTempC());
+    
+    /* Omnimount Yaw Axis Information                                           */
+    /* For more info, see http://navx-mxp.kauailabs.com/installation/omnimount  */
+    AHRS.BoardYawAxis yaw_axis = m_robotDrive.m_gyro.getBoardYawAxis();
+    SmartDashboard.putString(   "YawAxisDirection",     yaw_axis.up ? "Up" : "Down" );
+    SmartDashboard.putNumber(   "YawAxis",              yaw_axis.board_axis.getValue() );
+    
+    /* Sensor Board Information                                                 */
+    SmartDashboard.putString(   "FirmwareVersion",      m_robotDrive.m_gyro.getFirmwareVersion());
+    
+    /* Quaternion Data                                                          */
+    /* Quaternions are fascinating, and are the most compact representation of  */
+    /* orientation data.  All of the Yaw, Pitch and Roll Values can be derived  */
+    /* from the Quaternions.  If interested in motion processing, knowledge of  */
+    /* Quaternions is highly recommended.                                       */
+    SmartDashboard.putNumber(   "QuaternionW",          m_robotDrive.m_gyro.getQuaternionW());
+    SmartDashboard.putNumber(   "QuaternionX",          m_robotDrive.m_gyro.getQuaternionX());
+    SmartDashboard.putNumber(   "QuaternionY",          m_robotDrive.m_gyro.getQuaternionY());
+    SmartDashboard.putNumber(   "QuaternionZ",          m_robotDrive.m_gyro.getQuaternionZ());
+    
+    /* Connectivity Debugging Support                                           */
+    SmartDashboard.putNumber(   "IMU_Byte_Count",       m_robotDrive.m_gyro.getByteCount());
+    SmartDashboard.putNumber(   "IMU_Update_Count",     m_robotDrive.m_gyro.getUpdateCount());
+
+    /* Swerve Drive Module Positions */
+    SmartDashboard.putNumber("Front Left Turn Angle", m_robotDrive.m_frontLeft.m_turningEncoder.getPosition());
+    SmartDashboard.putNumber("Front Right Turn Angle", m_robotDrive.m_frontRight.m_turningEncoder.getPosition());
+    SmartDashboard.putNumber("Rear Left Turn Angle", m_robotDrive.m_rearLeft.m_turningEncoder.getPosition());
+    SmartDashboard.putNumber("Rear Right Turn Angle", m_robotDrive.m_rearRight.m_turningEncoder.getPosition());
+    }
+
+
+
+
+
 }
