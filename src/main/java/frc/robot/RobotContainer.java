@@ -46,6 +46,10 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    // Calibrate the Gyro
+    m_robotDrive.m_gyro.calibrate();
+    
+    
     // Configure the button bindings
     configureButtonBindings();
 
