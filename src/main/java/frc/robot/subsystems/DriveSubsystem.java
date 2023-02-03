@@ -11,15 +11,13 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.SerialPort;
-import edu.wpi.first.wpilibj.SerialPort.Port;
-
+import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 // import edu.wpi.first.wpilibj.ADIS16470_IMU;
-import com.kauailabs.navx.frc.AHRS;
-import com.kauailabs.navx.frc.AHRS.SerialDataType;
-
-import frc.robot.Constants.DriveConstants;
+// import com.kauailabs.navx.frc.AHRS;
+// import com.kauailabs.navx.frc.AHRS.SerialDataType;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
@@ -44,7 +42,8 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kBackRightChassisAngularOffset);
 
   // The gyro sensor
-  public AHRS m_gyro = new AHRS(Port.kUSB1);
+  public ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
+  // public AHRS m_gyro = new AHRS(Port.kUSB1);
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -72,6 +71,19 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+  
+        SmartDashboard.putBoolean(  "IMU_Connected",        m_gyro.isConnected());
+        SmartDashboard.putNumber(   "IMU_TotalYaw",         m_gyro.getAngle());
+        SmartDashboard.putNumber(   "IMU_YawRateDPS",       m_gyro.getRate());
+
+        /* Swerve Drive Module Positions */
+        SmartDashboard.putNumber("Front Left Turn Angle - Deg.", Math.toDegrees(m_frontLeft.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Front Right Turn Angle - Deg.", Math.toDegrees(m_frontRight.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Rear Left Turn Angle - Deg.", Math.toDegrees(m_rearLeft.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Rear Right Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
+
+   
+
   }
 
   /**
