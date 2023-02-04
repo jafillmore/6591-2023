@@ -63,7 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(
+    Pose2d newPose = m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
@@ -72,8 +72,8 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
 
- 
-        /* Gyro Data */
+        SmartDashboard.putNumber("New Position", newPose.getRotation().getDegrees());
+  
         SmartDashboard.putBoolean(  "IMU_Connected",        m_gyro.isConnected());
         SmartDashboard.putNumber(   "IMU_TotalYaw",         m_gyro.getAngle());
         SmartDashboard.putNumber(   "IMU_YawRateDPS",       m_gyro.getRate());
@@ -81,15 +81,10 @@ public class DriveSubsystem extends SubsystemBase {
 
 
         /* Swerve Drive Module Positions */
-        
-        SmartDashboard.putNumber("Swerve: LF Turn Angle - Deg.", Math.toDegrees(m_frontLeft.m_turningEncoder.getPosition()));
-        SmartDashboard.putNumber("Swerve: RF Turn Angle - Deg.", Math.toDegrees(m_frontRight.m_turningEncoder.getPosition()));
-        SmartDashboard.putNumber("Swerve: LR Turn Angle - Deg.", Math.toDegrees(m_rearLeft.m_turningEncoder.getPosition()));
-        SmartDashboard.putNumber("Swerve: RR Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
-        SmartDashboard.putNumber("Swerve: LF Target Angle - Deg.", m_frontLeft.m_desiredState.angle.getDegrees());
-        SmartDashboard.putNumber("Swerve: RF Target Angle - Deg.", m_frontRight.m_desiredState.angle.getDegrees());
-        SmartDashboard.putNumber("Swerve: LR Target Angle - Deg.", m_rearLeft.m_desiredState.angle.getDegrees());
-        SmartDashboard.putNumber("Swerve: RR Target Angle - Deg", m_rearRight.m_desiredState.angle.getDegrees());
+        SmartDashboard.putNumber("Front Left Turn Angle - Deg.", Math.toDegrees(m_frontLeft.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Front Right Turn Angle - Deg.", Math.toDegrees(m_frontRight.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Rear Left Turn Angle - Deg.", Math.toDegrees(m_rearLeft.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Rear Right Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
 
    
 
@@ -152,10 +147,14 @@ public class DriveSubsystem extends SubsystemBase {
    * Sets the wheels into an X formation to prevent movement.
    */
   public void setX() {
-    m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
-    m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+  }
+
+  public void zeroGyro() {
+    m_gyro.reset();
   }
 
   /**
