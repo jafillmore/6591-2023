@@ -10,6 +10,7 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 import edu.wpi.first.math.util.Units;
+import edu.wpi.first.networktables.PubSub;
 
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
@@ -115,6 +116,9 @@ public final class Constants {
 
   public static final class OIConstants {
     public static final int kDriverControllerPort = 0;
+    public static final int kGyroRestButton = 1;
+    public static final int kFieldRelativeButton = 3;
+
   }
 
   public static final class AutoConstants {
