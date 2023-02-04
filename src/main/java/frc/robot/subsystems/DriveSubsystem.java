@@ -63,7 +63,7 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    m_odometry.update(
+    Pose2d newPose = m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
@@ -71,6 +71,8 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearLeft.getPosition(),
             m_rearRight.getPosition()
         });
+
+        SmartDashboard.putNumber("New Position", newPose.getRotation().getDegrees());
   
         SmartDashboard.putBoolean(  "IMU_Connected",        m_gyro.isConnected());
         SmartDashboard.putNumber(   "IMU_TotalYaw",         m_gyro.getAngle());
@@ -82,7 +84,6 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Rear Left Turn Angle - Deg.", Math.toDegrees(m_rearLeft.m_turningEncoder.getPosition()));
         SmartDashboard.putNumber("Rear Right Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
 
-   
 
   }
 
@@ -143,10 +144,14 @@ public class DriveSubsystem extends SubsystemBase {
    * Sets the wheels into an X formation to prevent movement.
    */
   public void setX() {
-    m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
-    m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
-    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    m_frontLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
+    m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+  }
+
+  public void zeroGyro() {
+    m_gyro.reset();
   }
 
   /**

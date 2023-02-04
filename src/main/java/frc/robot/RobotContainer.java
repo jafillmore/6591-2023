@@ -85,6 +85,11 @@ public class RobotContainer {
             () -> m_robotDrive.setX(),
             m_robotDrive));
 
+    new JoystickButton(m_driverController, 1)
+    .whileTrue(new RunCommand(
+        () -> m_robotDrive.zeroGyro(),
+        m_robotDrive));
+
   }
 
   /**
