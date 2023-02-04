@@ -81,11 +81,14 @@ public class DriveSubsystem extends SubsystemBase {
 
 
         /* Swerve Drive Module Positions */
-        SmartDashboard.putNumber("Front Left Turn Angle - Deg.", Math.toDegrees(m_frontLeft.m_turningEncoder.getPosition()));
-        SmartDashboard.putNumber("Front Right Turn Angle - Deg.", Math.toDegrees(m_frontRight.m_turningEncoder.getPosition()));
-        SmartDashboard.putNumber("Rear Left Turn Angle - Deg.", Math.toDegrees(m_rearLeft.m_turningEncoder.getPosition()));
-        SmartDashboard.putNumber("Rear Right Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
-
+        SmartDashboard.putNumber("Swerve: LF Turn Angle - Deg", Math.toDegrees(m_frontLeft.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Swerve: RF Turn Angle - Deg", Math.toDegrees(m_frontRight.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Swerve: LR Turn Angle - Deg", Math.toDegrees(m_rearLeft.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Swerve: RR Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
+        SmartDashboard.putNumber("Swerve: LF Target Angle - Deg", m_frontLeft.m_desiredState.angle.getDegrees());
+        SmartDashboard.putNumber("Swerve: RF Target Angle - Deg", m_frontRight.m_desiredState.angle.getDegrees());
+        SmartDashboard.putNumber("Swerve: LR Target Angle - Deg", m_rearLeft.m_desiredState.angle.getDegrees());
+        SmartDashboard.putNumber("Swerve: RR Target Angle - Deg", m_rearRight.m_desiredState.angle.getDegrees());
    
 
   }
