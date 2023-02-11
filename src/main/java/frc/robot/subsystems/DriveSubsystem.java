@@ -24,22 +24,26 @@ public class DriveSubsystem extends SubsystemBase {
   public final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
-      DriveConstants.kFrontLeftChassisAngularOffset);
+      DriveConstants.kFrontLeftChassisAngularOffset,
+      DriveConstants.kFrontLeftDriveInversion);
 
   public final MAXSwerveModule m_frontRight = new MAXSwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
-      DriveConstants.kFrontRightChassisAngularOffset);
+      DriveConstants.kFrontRightChassisAngularOffset,
+      DriveConstants.kFrontRightDriveInversion);
 
   public final MAXSwerveModule m_rearLeft = new MAXSwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
-      DriveConstants.kBackLeftChassisAngularOffset);
+      DriveConstants.kBackLeftChassisAngularOffset,
+      DriveConstants.kBackLeftDriveInversion);
 
   public final MAXSwerveModule m_rearRight = new MAXSwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
-      DriveConstants.kBackRightChassisAngularOffset);
+      DriveConstants.kBackRightChassisAngularOffset,
+      DriveConstants.kBackRightDriveInversion);
 
   // The gyro sensor
   public ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
@@ -72,23 +76,33 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
 
+
         SmartDashboard.putNumber("New Position", newPose.getRotation().getDegrees());
-  
-        SmartDashboard.putBoolean(  "IMU_Connected",        m_gyro.isConnected());
-        SmartDashboard.putNumber(   "IMU_TotalYaw",         m_gyro.getAngle());
-        SmartDashboard.putNumber(   "IMU_YawRateDPS",       m_gyro.getRate());
 
+        /* IMU Status */  
+        SmartDashboard.putBoolean(  "IMU_Connected",  m_gyro.isConnected());
+        SmartDashboard.putNumber(   "IMU_TotalYaw",   m_gyro.getAngle());
+        SmartDashboard.putNumber(   "IMU_YawRateDPS", m_gyro.getRate());
 
-
-        /* Swerve Drive Module Positions */
+        /* Swerve Drive Module Actual Positions */
         SmartDashboard.putNumber("Swerve: LF Turn Angle - Deg", Math.toDegrees(m_frontLeft.m_turningEncoder.getPosition()));
         SmartDashboard.putNumber("Swerve: RF Turn Angle - Deg", Math.toDegrees(m_frontRight.m_turningEncoder.getPosition()));
         SmartDashboard.putNumber("Swerve: LR Turn Angle - Deg", Math.toDegrees(m_rearLeft.m_turningEncoder.getPosition()));
         SmartDashboard.putNumber("Swerve: RR Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
-        SmartDashboard.putNumber("Swerve: LF Target Angle - Deg", m_frontLeft.m_desiredState.angle.getDegrees());
-        SmartDashboard.putNumber("Swerve: RF Target Angle - Deg", m_frontRight.m_desiredState.angle.getDegrees());
-        SmartDashboard.putNumber("Swerve: LR Target Angle - Deg", m_rearLeft.m_desiredState.angle.getDegrees());
-        SmartDashboard.putNumber("Swerve: RR Target Angle - Deg", m_rearRight.m_desiredState.angle.getDegrees());
+
+        /* Swerve Drive Module Desired Positions */
+        SmartDashboard.putNumber("Swerve: LF Desired Angle - Deg", m_frontLeft.m_desiredState.angle.getRadians());
+        SmartDashboard.putNumber("Swerve: RF Desired Angle - Deg", m_frontRight.m_desiredState.angle.getDegrees());
+        SmartDashboard.putNumber("Swerve: LR Desired Angle - Deg", m_rearLeft.m_desiredState.angle.getDegrees());
+        SmartDashboard.putNumber("Swerve: RR Desired Angle - Deg", m_rearRight.m_desiredState.angle.getDegrees());
+
+        /* Swerve Drive Module Optimized Positions */
+        SmartDashboard.putNumber("Swerve: LF Opt. Angle - Deg", m_frontLeft.m_outputOptimizedState.angle.getRadians());
+        SmartDashboard.putNumber("Swerve: RF Opt. Angle - Deg", m_frontRight.m_outputOptimizedState.angle.getDegrees());
+        SmartDashboard.putNumber("Swerve: LR Opt. Angle - Deg", m_rearLeft.m_outputOptimizedState.angle.getDegrees());
+        SmartDashboard.putNumber("Swerve: RR Opt. Angle - Deg", m_rearRight.m_outputOptimizedState.angle.getDegrees());
+        
+
    
 
   }
@@ -156,9 +170,6 @@ public class DriveSubsystem extends SubsystemBase {
     m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
   }
 
-  public void zeroGyro() {
-    m_gyro.reset();
-  }
 
   /**
    * Sets the swerve ModuleStates.

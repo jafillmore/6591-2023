@@ -27,6 +27,7 @@ public class MAXSwerveModule {
 
   private double m_chassisAngularOffset = 0;
   public SwerveModuleState m_desiredState = new SwerveModuleState(0.0, new Rotation2d());
+  public SwerveModuleState m_outputOptimizedState = m_desiredState;
 
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
@@ -34,7 +35,7 @@ public class MAXSwerveModule {
    * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
    * Encoder.
    */
-  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset) {
+  public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, boolean driveInversion) {
     m_drivingSparkMax = new CANSparkMax(drivingCANId, MotorType.kBrushless);
     m_turningSparkMax = new CANSparkMax(turningCANId, MotorType.kBrushed);
 
@@ -98,6 +99,9 @@ public class MAXSwerveModule {
     m_drivingSparkMax.setSmartCurrentLimit(ModuleConstants.kDrivingMotorCurrentLimit);
     m_turningSparkMax.setSmartCurrentLimit(ModuleConstants.kTurningMotorCurrentLimit);
 
+    // Set the motor inversions to match position/orientation
+    m_drivingSparkMax.setInverted(driveInversion);
+
     // Save the SPARK MAX configurations. If a SPARK MAX browns out during
     // operation, it will maintain the above configurations.
     m_drivingSparkMax.burnFlash();
@@ -153,6 +157,8 @@ public class MAXSwerveModule {
     m_turningPIDController.setReference(optimizedDesiredState.angle.getRadians(), CANSparkMax.ControlType.kPosition);
 
     m_desiredState = desiredState;
+    m_outputOptimizedState = optimizedDesiredState;
+
   }
 
   /** Zeroes all the SwerveModule encoders. */

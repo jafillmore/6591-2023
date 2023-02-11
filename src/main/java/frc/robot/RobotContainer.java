@@ -89,10 +89,13 @@ public class RobotContainer {
         () -> m_robotDrive.zeroHeading(),
         m_robotDrive));
 
-    new JoystickButton(m_driverController, OIConstants.kFieldRelativeButton)
-    .debounce(0.1)
+    /*
+        new JoystickButton(m_driverController, OIConstants.kFieldRelativeButton)
+    .debounce(0.3)
     .onTrue (new RunCommand(
         () ->  driveFieldRelative = !driveFieldRelative));
+
+    */
 
 
 }
