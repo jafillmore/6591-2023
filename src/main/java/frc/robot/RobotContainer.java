@@ -42,7 +42,7 @@ public class RobotContainer {
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   
   // Toggle for field relative driving
-  boolean driveFieldRelative = false;
+  boolean driveFieldRelative = true;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -61,7 +61,7 @@ public class RobotContainer {
         new RunCommand(
             () -> m_robotDrive.drive(
                 MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.06),
-                MathUtil.applyDeadband(-m_driverController.getLeftX(), 0.06),
+                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.06),
                 MathUtil.applyDeadband(-m_driverController.getRightX(), 0.06),
                 driveFieldRelative),
             m_robotDrive));
@@ -89,11 +89,13 @@ public class RobotContainer {
         () -> m_robotDrive.zeroHeading(),
         m_robotDrive));
 
-    
+    /* 
         new JoystickButton(m_driverController, OIConstants.kFieldRelativeButton)
     .debounce(0.1)
     .onTrue (new RunCommand(
         () ->  driveFieldRelative = !driveFieldRelative));
+    */
+    
 
     
 
