@@ -21,25 +21,25 @@ import frc.robot.Constants.DriveConstants;
 
 public class DriveSubsystem extends SubsystemBase {
   // Create MAXSwerveModules
-  public final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
+  private final MAXSwerveModule m_frontLeft = new MAXSwerveModule(
       DriveConstants.kFrontLeftDrivingCanId,
       DriveConstants.kFrontLeftTurningCanId,
       DriveConstants.kFrontLeftChassisAngularOffset,
       DriveConstants.kFrontLeftDriveInversion);
 
-  public final MAXSwerveModule m_frontRight = new MAXSwerveModule(
+  private final MAXSwerveModule m_frontRight = new MAXSwerveModule(
       DriveConstants.kFrontRightDrivingCanId,
       DriveConstants.kFrontRightTurningCanId,
       DriveConstants.kFrontRightChassisAngularOffset,
       DriveConstants.kFrontRightDriveInversion);
 
-  public final MAXSwerveModule m_rearLeft = new MAXSwerveModule(
+  private final MAXSwerveModule m_rearLeft = new MAXSwerveModule(
       DriveConstants.kRearLeftDrivingCanId,
       DriveConstants.kRearLeftTurningCanId,
       DriveConstants.kBackLeftChassisAngularOffset,
       DriveConstants.kBackLeftDriveInversion);
 
-  public final MAXSwerveModule m_rearRight = new MAXSwerveModule(
+  private final MAXSwerveModule m_rearRight = new MAXSwerveModule(
       DriveConstants.kRearRightDrivingCanId,
       DriveConstants.kRearRightTurningCanId,
       DriveConstants.kBackRightChassisAngularOffset,
@@ -67,7 +67,7 @@ public class DriveSubsystem extends SubsystemBase {
   @Override
   public void periodic() {
     // Update the odometry in the periodic block
-    Pose2d newPose = m_odometry.update(
+    m_odometry.update(
         Rotation2d.fromDegrees(m_gyro.getAngle()),
         new SwerveModulePosition[] {
             m_frontLeft.getPosition(),
@@ -76,8 +76,6 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
 
-
-        SmartDashboard.putNumber("New Position", newPose.getRotation().getDegrees());
 
         /* IMU Status */  
         SmartDashboard.putBoolean(  "IMU_Connected",  m_gyro.isConnected());
@@ -91,13 +89,13 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Swerve: RR Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
 
         /* Swerve Drive Module Desired Positions */
-        SmartDashboard.putNumber("Swerve: LF Desired Angle - Deg", m_frontLeft.m_desiredState.angle.getRadians());
+        SmartDashboard.putNumber("Swerve: LF Desired Angle - Deg", m_frontLeft.m_desiredState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RF Desired Angle - Deg", m_frontRight.m_desiredState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: LR Desired Angle - Deg", m_rearLeft.m_desiredState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RR Desired Angle - Deg", m_rearRight.m_desiredState.angle.getDegrees());
 
         /* Swerve Drive Module Optimized Positions */
-        SmartDashboard.putNumber("Swerve: LF Opt. Angle - Deg", m_frontLeft.m_outputOptimizedState.angle.getRadians());
+        SmartDashboard.putNumber("Swerve: LF Opt. Angle - Deg", m_frontLeft.m_outputOptimizedState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RF Opt. Angle - Deg", m_frontRight.m_outputOptimizedState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: LR Opt. Angle - Deg", m_rearLeft.m_outputOptimizedState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RR Opt. Angle - Deg", m_rearRight.m_outputOptimizedState.angle.getDegrees());

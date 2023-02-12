@@ -31,8 +31,8 @@ public class MAXSwerveModule {
 
   /**
    * Constructs a MAXSwerveModule and configures the driving and turning motor,
-   * encoder, and PID controller. This configuration is specific to the REV
-   * MAXSwerve Module built with NEOs, SPARKS MAX, and a Through Bore
+   * encoder, and PID controller. This configuration is modified from the REV
+   * MAXSwerve Module built with 1 Neo (drive), 1 PG71 (turning), 2 SPARK MAX, and a Lamprey
    * Encoder.
    */
   public MAXSwerveModule(int drivingCANId, int turningCANId, double chassisAngularOffset, boolean driveInversion) {

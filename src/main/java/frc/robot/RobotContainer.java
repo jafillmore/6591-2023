@@ -36,7 +36,7 @@ import frc.robot.subsystems.DriveSubsystem;
  */
 public class RobotContainer {
   // The robot's subsystems
-  private static final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
@@ -85,17 +85,17 @@ public class RobotContainer {
             m_robotDrive));
 
     new JoystickButton(m_driverController, OIConstants.kGyroRestButton)
-    .whileTrue(new RunCommand(
+    .onTrue(new RunCommand(
         () -> m_robotDrive.zeroHeading(),
         m_robotDrive));
 
-    /*
+    
         new JoystickButton(m_driverController, OIConstants.kFieldRelativeButton)
-    .debounce(0.3)
+    .debounce(0.1)
     .onTrue (new RunCommand(
         () ->  driveFieldRelative = !driveFieldRelative));
 
-    */
+    
 
 
 }
