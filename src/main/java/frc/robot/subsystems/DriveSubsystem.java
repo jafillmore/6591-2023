@@ -4,6 +4,10 @@
 
 package frc.robot.subsystems;
 
+// import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+// import edu.wpi.first.wpilibj.ADIS16470_IMU;
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.math.kinematics.ChassisSpeeds;
@@ -11,10 +15,7 @@ import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.kinematics.SwerveDriveOdometry;
 import edu.wpi.first.math.kinematics.SwerveModulePosition;
 import edu.wpi.first.math.kinematics.SwerveModuleState;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
-// import edu.wpi.first.wpilibj.ADIS16470_IMU;
-// import com.kauailabs.navx.frc.AHRS;
-// import com.kauailabs.navx.frc.AHRS.SerialDataType;
+import edu.wpi.first.wpilibj.SerialPort.Port;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.DriveConstants;
@@ -46,8 +47,14 @@ public class DriveSubsystem extends SubsystemBase {
       DriveConstants.kBackRightDriveInversion);
 
   // The gyro sensor
-  public ADXRS450_Gyro m_gyro = new ADXRS450_Gyro();
-  // public AHRS m_gyro = new AHRS(Port.kUSB1);
+    /* Communicate w/navX-MXP via the USB Port.                                        */
+    /* Alternatively:  I2C.Port.kMXP, SerialPort.Port.kMXP or SerialPort.Port.kUSB     */
+    /* See http://navx-mxp.kauailabs.com/guidance/selecting-an-interface/ for details. */
+  public AHRS m_gyro = new AHRS(Port.kUSB);
+  public int resetGyroCount = 0;
+  public int setXcount = 0;
+  public int fieldRelativeCount = 0;
+
 
   // Odometry class for tracking robot pose
   SwerveDriveOdometry m_odometry = new SwerveDriveOdometry(
@@ -79,8 +86,20 @@ public class DriveSubsystem extends SubsystemBase {
 
         /* IMU Status */  
         SmartDashboard.putBoolean(  "IMU_Connected",  m_gyro.isConnected());
+        SmartDashboard.putNumber(   "IMU_Temp_C",     m_gyro.getTempC());        
         SmartDashboard.putNumber(   "IMU_TotalYaw",   m_gyro.getAngle());
         SmartDashboard.putNumber(   "IMU_YawRateDPS", m_gyro.getRate());
+        SmartDashboard.putNumber(   "IMU_Pitch",      m_gyro.getPitch());
+        SmartDashboard.putNumber(   "IMU_Roll",       m_gyro.getRoll());
+
+
+        /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
+          
+        SmartDashboard.putNumber(   "IMU_Accel_X",          m_gyro.getWorldLinearAccelX());
+        SmartDashboard.putNumber(   "IMU_Accel_Y",          m_gyro.getWorldLinearAccelY());
+        SmartDashboard.putBoolean(  "IMU_IsMoving",         m_gyro.isMoving());
+        SmartDashboard.putBoolean(  "IMU_IsRotating",       m_gyro.isRotating());
+
 
         /* Swerve Drive Module Actual Positions */
         SmartDashboard.putNumber("Swerve: LF Turn Angle - Deg", Math.toDegrees(m_frontLeft.m_turningEncoder.getPosition()));
@@ -99,9 +118,13 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber("Swerve: RF Opt. Angle - Deg", m_frontRight.m_outputOptimizedState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: LR Opt. Angle - Deg", m_rearLeft.m_outputOptimizedState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RR Opt. Angle - Deg", m_rearRight.m_outputOptimizedState.angle.getDegrees());
-        
 
-   
+        /* command counters for debuging */
+        SmartDashboard.putNumber("Count: Set X Count", setXcount);
+        SmartDashboard.putNumber("Count: Reset Gyro", resetGyroCount);
+        SmartDashboard.putNumber("Count: Field Relative", fieldRelativeCount);
+
+
 
   }
 
@@ -166,6 +189,7 @@ public class DriveSubsystem extends SubsystemBase {
     m_frontRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
     m_rearLeft.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(45)));
     m_rearRight.setDesiredState(new SwerveModuleState(0, Rotation2d.fromDegrees(-45)));
+    setXcount ++;
   }
 
 
@@ -194,7 +218,16 @@ public class DriveSubsystem extends SubsystemBase {
   /** Zeroes the heading of the robot. */
   public void zeroHeading() {
     m_gyro.reset();
+    resetGyroCount ++;
   }
+
+  /** Zeroes the heading of the robot. */
+  public void toggleFieldRelative() {
+    DriveConstants.driveFieldRelative = !DriveConstants.driveFieldRelative;
+    fieldRelativeCount ++;
+  }
+
+
 
   /**
    * Returns the heading of the robot.

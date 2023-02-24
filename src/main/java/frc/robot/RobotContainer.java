@@ -6,8 +6,6 @@ package frc.robot;
 
 import java.util.List;
 
-// import com.kauailabs.navx.frc.AHRS;
-
 import edu.wpi.first.math.MathUtil;
 import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.controller.ProfiledPIDController;
@@ -17,7 +15,6 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
-import edu.wpi.first.wpilibj.PS4Controller.Button;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -41,13 +38,9 @@ public class RobotContainer {
   // The driver's controller
   XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
   
-  // Toggle for field relative driving
-  boolean driveFieldRelative = true;
-
-  /**
-   * The container for the robot. Contains subsystems, OI devices, and commands.
-   */
+  /** The container for the robot. Contains subsystems, OI devices, and commands.  */
   public RobotContainer() {
+    
     // Calibrate the Gyro
     m_robotDrive.m_gyro.calibrate();
   
@@ -62,45 +55,42 @@ public class RobotContainer {
             () -> m_robotDrive.drive(
                 MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.06),
                 MathUtil.applyDeadband(m_driverController.getLeftX(), 0.06),
-                MathUtil.applyDeadband(-m_driverController.getRightX(), 0.06),
-                driveFieldRelative),
+                MathUtil.applyDeadband(m_driverController.getRightX(), 0.06),
+              DriveConstants.driveFieldRelative),
             m_robotDrive));
-
              
   }
 
   /**
    * Use this method to define your button->command mappings. Buttons can be
-   * created by
-   * instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
-   * subclasses ({@link
-   * edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling
-   * passing it to a
-   * {@link JoystickButton}.
+   * created by instantiating a {@link edu.wpi.first.wpilibj.GenericHID} or one of its
+   * subclasses ({@link edu.wpi.first.wpilibj.Joystick} or {@link XboxController}), and then calling
+   * passing it to a {@link JoystickButton}.
    */
   private void configureButtonBindings() {
-    new JoystickButton(m_driverController, Button.kR1.value)
+    
+    new JoystickButton(m_driverController, OIConstants.kSetXButton)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
 
     new JoystickButton(m_driverController, OIConstants.kGyroRestButton)
-    .onTrue(new RunCommand(
-        () -> m_robotDrive.zeroHeading(),
+        .debounce(0.1)   
+        .whileTrue(new RunCommand(
+            () -> m_robotDrive.zeroHeading(),
+            m_robotDrive));
+
+    
+    new JoystickButton(m_driverController, OIConstants.kFieldRelativeButton)
+        .debounce(0.1)
+        .whileTrue (new RunCommand(
+        () -> m_robotDrive.toggleFieldRelative(),
         m_robotDrive));
-
-    /* 
-        new JoystickButton(m_driverController, OIConstants.kFieldRelativeButton)
-    .debounce(0.1)
-    .onTrue (new RunCommand(
-        () ->  driveFieldRelative = !driveFieldRelative));
-    */
-    
-
-    
+   
+      
 
 
-}
+  }
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.
@@ -147,5 +137,4 @@ public class RobotContainer {
     // Run path following command, then stop at the end.
     return swerveControllerCommand.andThen(() -> m_robotDrive.drive(0, 0, 0, false));
   }
-    
 }
