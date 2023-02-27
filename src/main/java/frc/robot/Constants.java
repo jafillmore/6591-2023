@@ -123,10 +123,11 @@ public final class Constants {
   }
 
   public static final class OIConstants {
-    public static final int kDriverControllerPort = 0;
+    public static final int kLeftControllerPort = 0;
+    public static final int kRightControllerPort = 1;
     public static final int kGyroRestButton = 1;
     public static final int kFieldRelativeButton = 3;
-    public static final int kSetXButton = 6;
+    public static final int kSetXButton = 1;
 
   }
 

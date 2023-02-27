@@ -15,7 +15,9 @@ import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.trajectory.Trajectory;
 import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
@@ -36,7 +38,8 @@ public class RobotContainer {
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
 
   // The driver's controller
-  XboxController m_driverController = new XboxController(OIConstants.kDriverControllerPort);
+  Joystick m_leftJoystick = new Joystick(OIConstants.kLeftControllerPort);
+  Joystick m_rightJoystick = new Joystick(OIConstants.kRightControllerPort);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands.  */
   public RobotContainer() {
@@ -53,9 +56,9 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-m_driverController.getLeftY(), 0.06),
-                MathUtil.applyDeadband(m_driverController.getLeftX(), 0.06),
-                MathUtil.applyDeadband(m_driverController.getRightX(), 0.06),
+                MathUtil.applyDeadband(-m_leftJoystick.getY(), 0.06),
+                MathUtil.applyDeadband(m_leftJoystick.getX(), 0.06),
+                MathUtil.applyDeadband(m_rightJoystick.getZ(), 0.06),
               DriveConstants.driveFieldRelative),
             m_robotDrive));
              
@@ -69,19 +72,19 @@ public class RobotContainer {
    */
   private void configureButtonBindings() {
     
-    new JoystickButton(m_driverController, OIConstants.kSetXButton)
+    new JoystickButton(m_leftJoystick, OIConstants.kSetXButton)
         .whileTrue(new RunCommand(
             () -> m_robotDrive.setX(),
             m_robotDrive));
 
-    new JoystickButton(m_driverController, OIConstants.kGyroRestButton)
+    new JoystickButton(m_rightJoystick, OIConstants.kGyroRestButton)
         .debounce(0.1)   
         .whileTrue(new RunCommand(
             () -> m_robotDrive.zeroHeading(),
             m_robotDrive));
 
     
-    new JoystickButton(m_driverController, OIConstants.kFieldRelativeButton)
+    new JoystickButton(m_rightJoystick, OIConstants.kFieldRelativeButton)
         .debounce(0.1)
         .whileTrue (new RunCommand(
         () -> m_robotDrive.toggleFieldRelative(),
@@ -91,6 +94,10 @@ public class RobotContainer {
 
 
   }
+
+  public static SendableChooser<Command> mChooser = new SendableChooser<>();
+
+  //Add commands to the autonomous command chooser
 
   /**
    * Use this to pass the autonomous command to the main {@link Robot} class.

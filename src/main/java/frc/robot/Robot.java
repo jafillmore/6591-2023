@@ -47,6 +47,7 @@ public class Robot extends TimedRobot {
     CommandScheduler.getInstance().run();
 
     SmartDashboard.putBoolean(  "Drive Field Relative", Constants.DriveConstants.driveFieldRelative   );
+    SmartDashboard.putData(RobotContainer.mChooser);
 
     
         
