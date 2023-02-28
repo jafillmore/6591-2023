@@ -40,6 +40,7 @@ public class RobotContainer {
   // The driver's controller
   Joystick m_leftJoystick = new Joystick(OIConstants.kLeftControllerPort);
   Joystick m_rightJoystick = new Joystick(OIConstants.kRightControllerPort);
+  Joystick m_buttonBoard = new Joystick(OIConstants.kButtonBoardPort);
   
   /** The container for the robot. Contains subsystems, OI devices, and commands.  */
   public RobotContainer() {
@@ -90,7 +91,19 @@ public class RobotContainer {
         () -> m_robotDrive.toggleFieldRelative(),
         m_robotDrive));
    
-      
+
+    new JoystickButton(m_buttonBoard, 1)
+    .debounce(0.1)
+    .whileTrue(new RunCommand(
+    () ->
+    ));
+
+
+    new JoystickButton(m_buttonBoard, 2)
+    .debounce(0.1)
+    .whileTrue(new RunComman(
+      () ->
+    ));
 
 
   }

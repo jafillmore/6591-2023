@@ -128,7 +128,7 @@ public final class Constants {
     public static final int kGyroRestButton = 1;
     public static final int kFieldRelativeButton = 3;
     public static final int kSetXButton = 1;
-
+    public static final int kButtonBoardPort = 2;
   }
 
   public static final class AutoConstants {
