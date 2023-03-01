@@ -4,10 +4,12 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
+import com.revrobotics.SparkMaxPIDController;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -18,88 +20,90 @@ public class LiftSubsystem extends SubsystemBase {
   /** Creates a new LiftSubsystem. */
 
 
-  //private final TalonSRX m_elevatorSrx = new TalonSRX(LiftConstants.kElevatorMotorCanId);
+  private final TalonSRX m_elevatorSrx = new TalonSRX(LiftConstants.kElevatorMotorCanId);
 
-  //private final RelativeEncoder m_armEncoder;
-  //private final RelativeEncoder m_wristEncoder;
+  private final CANSparkMax m_armSparkMax = new CANSparkMax(LiftConstants.kArmMotorCanId, MotorType.kBrushless);
+  private final CANSparkMax m_wristSparkMax = new CANSparkMax(LiftConstants.kWristMotorCanId, MotorType.kBrushed);
+  private final CANSparkMax m_leftIntakeSpark = new CANSparkMax(LiftConstants.kLeftIntakeMotorCanId, MotorType.kBrushed);
+  private final CANSparkMax m_rightIntakeSparkMax = new CANSparkMax(LiftConstants.kRightIntakeMotorCanId, MotorType.kBrushed);
+
+  private final RelativeEncoder m_armEncoder = m_armSparkMax.getEncoder();
+  private final RelativeEncoder m_wristEncoder = m_wristSparkMax.getEncoder();
+
+  private final SparkMaxPIDController m_armPIDController = m_armSparkMax.getPIDController();
+  private final SparkMaxPIDController m_wristPIDController = m_wristSparkMax.getPIDController();
   
-  //private final CANSparkMax m_armSparkMax = new CANSparkMax(LiftConstants.kArmMotorCanId, MotorType.kBrushless);
-  //private final CANSparkMax m_wristSparkMax = new CANSparkMax(LiftConstants.kWristMotorCanId, MotorType.kBrushed);
-  //private final CANSparkMax m_leftIntakeSpark = new CANSparkMax(LiftConstants.kLeftIntakeMotorCanId, MotorType.kBrushed);
-  //private final CANSparkMax m_rightIntakeSparkMax = new CANSparkMax(LiftConstants.kRightIntakeMotorCanId, MotorType.kBrushed);
-
-  // Factory reset, so we get the SPARKS MAX to a known state before configuring
-  // them. This is useful in case a SPARK MAX is swapped out.
-  // m_armSparkMax.restoreFactoryDefaults();
-  // m_armSparkMax.restoreFactoryDefaults();
-
-  //private final SparkMaxPIDController m_armPIDController;
-  //private final SparkMaxPIDController m_wristPIDController;
-
-
   
+  public LiftSubsystem() {
 
-  m_armEncoder = m_armSparkMax.getEncoder();
-  m_wristEncoder = m_wristSparkMax.getEncoder();
-
-  m_armPIDController = m_armSparkMax.getPIDController();
-  m_wristPIDController = m_wristSparkMax.getPIDController();
-
-  m_armPIDController.setFeedbackDevice(m_armEncoder);
-  m_wristPIDController.setFeedbackDevice(m_wristEncoder);
-
-  m_armEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
-  m_armEncoder.setVelocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
-
-  m_wristEncoder.setPositionConversionFactor(ModuleConstants.kDrivingEncoderPositionFactor);
-  m_wristEncoder.setVelocityConversionFactor(ModuleConstants.kDrivingEncoderVelocityFactor);
+    // Factory reset, so we get the SPARKS MAX to a known state before configuring
+    // them. This is useful in case a SPARK MAX is swapped out.
+    m_armSparkMax.restoreFactoryDefaults();
+    m_wristSparkMax.restoreFactoryDefaults();
+    m_leftIntakeSpark.restoreFactoryDefaults();
+    m_rightIntakeSparkMax.restoreFactoryDefaults();
   
-  m_armPIDController.setPositionPIDWrappingEnabled(false);
-  m_wristPIDController.setPositionPIDWrappingEnabled(false);
-
-  // Set the PID gains for the driving motor. Note these are example gains, and you
-  // may need to tune them for your own robot!
-  m_armPIDController.setP(ModuleConstants.kDrivingP);
-  m_armPIDController.setI(ModuleConstants.kDrivingI);
-  m_armPIDController.setD(ModuleConstants.kDrivingD);
-  m_armPIDController.setFF(ModuleConstants.kDrivingFF);
-  m_armPIDController.setOutputRange(ModuleConstants.kDrivingMinOutput,
-    ModuleConstants.kDrivingMaxOutput);
-
-  // Set the PID gains for the turning motor. Note these are example gains, and you
-  // may need to tune them for your own robot!
-  m_wristPIDController.setP(ModuleConstants.kTurningP);
-  m_wristPIDController.setI(ModuleConstants.kTurningI);
-  m_wristPIDController.setD(ModuleConstants.kTurningD);
-  m_wristPIDController.setFF(ModuleConstants.kTurningFF);
-  m_wristPIDController.setOutputRange(ModuleConstants.kTurningMinOutput,
-    ModuleConstants.kTurningMaxOutput);
-
-
-
-  m_armSparkMax.burnFlash();
-  m_wristSparkMax.burnFlash();
-
-
+    m_armPIDController.setFeedbackDevice(m_armEncoder);
+    m_wristPIDController.setFeedbackDevice(m_wristEncoder);
   
-  public LiftSubsystem() {}
+    m_armEncoder.setPositionConversionFactor(LiftConstants.kArmEncoderPositionFactor);
+    m_armEncoder.setVelocityConversionFactor(LiftConstants.kArmEncoderVelocityFactor);
+  
+    m_wristEncoder.setPositionConversionFactor(LiftConstants.kWristEncoderPositionFactor);
+    m_wristEncoder.setVelocityConversionFactor(LiftConstants.kWristEncoderVelocityFactor);
+    
+    m_armPIDController.setPositionPIDWrappingEnabled(false);
+    m_wristPIDController.setPositionPIDWrappingEnabled(false);
+  
+    // Set the PID gains for the driving motor. Note these are example gains, and you
+    // may need to tune them for your own robot!
+    m_armPIDController.setP(LiftConstants.kArmP);
+    m_armPIDController.setI(LiftConstants.kArmI);
+    m_armPIDController.setD(LiftConstants.kArmD);
+    m_armPIDController.setFF(LiftConstants.kArmFF);
+    m_armPIDController.setOutputRange(LiftConstants.kArmMinOutput,
+      LiftConstants.kArmMaxOutput);
+  
+    // Set the PID gains for the turning motor. Note these are example gains, and you
+    // may need to tune them for your own robot!
+    m_wristPIDController.setP(LiftConstants.kWristP);
+    m_wristPIDController.setI(LiftConstants.kWristI);
+    m_wristPIDController.setD(LiftConstants.kWristD);
+    m_wristPIDController.setFF(LiftConstants.kWristFF);
+    m_wristPIDController.setOutputRange(LiftConstants.kWristMinOutput,
+      LiftConstants.kWristMaxOutput);
+  
+  
+  
+    m_armSparkMax.burnFlash();
+    m_wristSparkMax.burnFlash();
+
+  }
 
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 
     /* Lift Actual Positions */
-    SmartDashboard.putNumber("Arm Angle", Math.toDegrees(m_elevatorSrx.getSelectedSensorPosition()));
-    SmartDashboard.putNumber("Arm Angle", Math.toDegrees(m_armEncoder.getPosition()));
-    SmartDashboard.putNumber("Wrist Angle", Math.toDegrees(m_wristEncoder.getPosition()));
-
+    
+    SmartDashboard.putNumber("Elevator Height", m_elevatorSrx.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Arm Angle", m_armEncoder.getPosition());
+    SmartDashboard.putNumber("Wrist Angle", m_wristEncoder.getPosition());
+    
      
   }
 
-  public void setPosition(double elevatorHeight, double armAngle, double wristAngle) {
+ 
+  //  Method to set the lift position
+  public void setPosition(double elevatorTargetHeight, double armTargetAngle, double wristTargetAngle) {
+
+    m_elevatorSrx.set(ControlMode.Position, elevatorTargetHeight);
+    m_armPIDController.setReference(armTargetAngle, CANSparkMax.ControlType.kPosition);  // Set the arm PID target to the desired angle
+    m_wristPIDController.setReference(wristTargetAngle, CANSparkMax.ControlType.kPosition);  // Set the arm PID target to the desired angle
+    
 
   }
-
+ 
 
 
 }

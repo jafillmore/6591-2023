@@ -129,6 +129,28 @@ public final class Constants {
     public static final int kLeftIntakeMotorCanId = 12 ;
     public static final int kRightIntakeMotorCanId = 13 ;
 
+    public static final double kArmEncoderPositionFactor = 1 ;
+    public static final double kArmEncoderVelocityFactor = (1/60.0) ;
+
+    public static final double kWristEncoderPositionFactor = 1 ;
+    public static final double kWristEncoderVelocityFactor = (1/60.0) ;
+
+    public static final double kArmP = 0.3 ;  // Example was 0.4
+    public static final double kArmI = 0 ;
+    public static final double kArmD = 1 ;   // Example was 0.0
+    public static final double kArmFF = 0 ;
+    public static final double kArmMinOutput = -1;
+    public static final double kArmMaxOutput = 1;
+
+    public static final double kWristP = 1; // Example was 1.0
+    public static final double kWristI = 0;
+    public static final double kWristD = 20.0 ;  // Example was 0
+    public static final double kWristFF = 0.0;
+    public static final double kWristMinOutput = -1;
+    public static final double kWristMaxOutput = 1;
+
+
+
 
 
   }
