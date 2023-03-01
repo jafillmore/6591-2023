@@ -5,6 +5,7 @@
 package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
@@ -149,7 +150,43 @@ public final class Constants {
     public static final double kWristMinOutput = -1;
     public static final double kWristMaxOutput = 1;
 
+    
+    public static final boolean kElevatorInversion = false;
+    public static final boolean kArmInversion = false;
+    public static final boolean kWristInversion = false;
+    public static final boolean kLeftIntakeInversion = false;
+    public static final boolean kRightIntiakeInversion = true;
 
+    
+    public static final NeutralMode kElevatorNeutralMode = NeutralMode.Brake;
+    public static final IdleMode kArmIdleMode = IdleMode.kBrake;
+    public static final IdleMode kwristIdleMode = IdleMode.kBrake;
+    public static final IdleMode kLeftIntakeIdleMode = IdleMode.kBrake;
+    public static final IdleMode kRightIntakeIdleMode = IdleMode.kBrake;
+  
+  }
+
+
+  public static final class PositionConstants {
+
+    // Delivery Positions
+    public static final double kTopCone[] = new double[] { 6.0, 95.0, 180.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kMiddleCone[] = new double[] {7.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kTopCube[] = new double[] { 5.0, 95.0, 180.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kMiddleCube[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kHybrid[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
+
+    // Pickup Positions
+    public static final double kPortalRamp[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kPortalShelf[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kFloor[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
+
+    // Stow Position
+    public static final double kStow[] = new double[] {0, 0, 0}; // Elevator Height, Arm Angle, Wrist Angle
+
+
+    
+    
 
 
 
@@ -158,12 +195,58 @@ public final class Constants {
 
 
   public static final class OIConstants {
+    
+    // Left Controller Port and Buttons
     public static final int kLeftControllerPort = 0;
+
+    public static final int kButtonEject = 1 ; // Need to decide which stick and button we should use...
+
+
+    // Right Controller Port and Buttons
     public static final int kRightControllerPort = 1;
-    public static final int kGyroRestButton = 1;
-    public static final int kFieldRelativeButton = 3;
-    public static final int kSetXButton = 1;
-    public static final int kButtonBoardPort = 2;
+
+    public static final int kButtonIntake = 1 ; // Need to decide which stick and button we should use...
+    
+    public static final int kSetXButton = 4; // Need to decide which stick and button we should use...
+    public static final int kGyroRestButton = 5;  // Need to decide which stick and button we should use...
+    
+    
+    // public static final int kFieldRelativeButton = 3;  // Not currently Used
+    
+    
+
+    // Button Board Port and Buttons
+    public static final int kButtonBoardPort = 2 ;
+
+    // Placement Buttons
+    public static final int kButtonTopCone = 1 ;
+    public static final int kButtonMidleCone = 2 ;
+    public static final int kButtonTopCube = 3 ;
+    public static final int kButtonMiddleCone = 4 ;
+    public static final int kButtonHybrid = 5 ;
+
+    // Pick-up Buttons
+    public static final int kButtonRamp = 6 ;
+    public static final int kButtonShelf = 7 ;
+    public static final int kButtonFloor = 8 ;
+    public static final int kButtonStow = 9 ;
+
+    // Manual Arm control Overrides
+    public static final int kButton = ;
+    public static final int kButtonArmUp = 15 ;
+    public static final int kButton = ;
+
+
+
+
+
+
+
+
+
+
+
+
   }
 
   public static final class AutoConstants {

@@ -33,7 +33,7 @@ public class LiftSubsystem extends SubsystemBase {
   private final SparkMaxPIDController m_armPIDController = m_armSparkMax.getPIDController();
   private final SparkMaxPIDController m_wristPIDController = m_wristSparkMax.getPIDController();
 
-  double m_elevatorTargetHeight = 0;
+  public double m_elevatorTargetHeight = 0;
   double m_armTargetAngle = 0;
   double m_wristTargetAngle = 0;
 
@@ -47,6 +47,20 @@ public class LiftSubsystem extends SubsystemBase {
     m_wristSparkMax.restoreFactoryDefaults();
     m_leftIntakeSpark.restoreFactoryDefaults();
     m_rightIntakeSparkMax.restoreFactoryDefaults();
+
+    m_elevatorSrx.setInverted(LiftConstants.kElevatorInversion);
+    m_armSparkMax.setInverted(LiftConstants.kArmInversion);
+    m_wristSparkMax.setInverted(LiftConstants.kWristInversion);
+    m_leftIntakeSpark.setInverted(LiftConstants.kLeftIntakeInversion);
+    m_rightIntakeSparkMax.setInverted(LiftConstants.kRightIntiakeInversion);
+
+    m_elevatorSrx.setNeutralMode(LiftConstants.kElevatorNeutralMode);
+    m_armSparkMax.setIdleMode(LiftConstants.kArmIdleMode);
+    m_wristSparkMax.setIdleMode(LiftConstants.kwristIdleMode);
+    m_leftIntakeSpark.setIdleMode(LiftConstants.kLeftIntakeIdleMode);
+    m_rightIntakeSparkMax.setIdleMode(LiftConstants.kRightIntakeIdleMode);
+
+    
   
     m_armPIDController.setFeedbackDevice(m_armEncoder);
     m_wristPIDController.setFeedbackDevice(m_wristEncoder);
@@ -57,8 +71,6 @@ public class LiftSubsystem extends SubsystemBase {
     m_wristEncoder.setPositionConversionFactor(LiftConstants.kWristEncoderPositionFactor);
     m_wristEncoder.setVelocityConversionFactor(LiftConstants.kWristEncoderVelocityFactor);
     
-    m_armPIDController.setPositionPIDWrappingEnabled(false);
-    m_wristPIDController.setPositionPIDWrappingEnabled(false);
   
     // Set the PID gains for the driving motor. Note these are example gains, and you
     // may need to tune them for your own robot!
@@ -118,7 +130,7 @@ public class LiftSubsystem extends SubsystemBase {
 
   }
  
-  // STUFF THAT NEEDS TO BE ADDED
+  // STUFF THAT NEEDS TO BE ADDED (with corresponding buttons)
 
   // Method to turn off the intake motors
 

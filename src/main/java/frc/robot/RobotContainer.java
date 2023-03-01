@@ -25,6 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
+import frc.robot.Constants.PositionConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 
@@ -86,19 +87,23 @@ public class RobotContainer {
             () -> m_robotDrive.zeroHeading(),
             m_robotDrive));
 
-    
+    /*   //  Dont think we need this anymore...
     new JoystickButton(m_rightJoystick, OIConstants.kFieldRelativeButton)
         .debounce(0.1)
         .whileTrue (new RunCommand(
             () -> m_robotDrive.toggleFieldRelative(),
             m_robotDrive));
-   
+    */
 
+    
+    //Position Lift for Upper Posts
     new JoystickButton(m_buttonBoard, 1)
         .debounce(0.1)
         .whileTrue(new RunCommand(
-            () -> m_lift.setPosition(0.0, 0.0, 0.0),
+            () -> m_lift.setPosition(PositionConstants.kTopCone[1], PositionConstants.kTopCone[2], PositionConstants.kTopCone[3]),
             m_lift));
+
+    
 
 
   }
