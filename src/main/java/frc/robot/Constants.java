@@ -122,6 +122,19 @@ public final class Constants {
     public static final int kTurningMotorCurrentLimit = 20; // amps
   }
 
+  public static final class LiftConstants {
+    public static final int kElevatorMotorCanId = 9 ;
+    public static final int kArmMotorCanId = 10 ;
+    public static final int kWristMotorCanId = 11 ;
+    public static final int kLeftIntakeMotorCanId = 12 ;
+    public static final int kRightIntakeMotorCanId = 13 ;
+
+
+
+  }
+
+
+
   public static final class OIConstants {
     public static final int kLeftControllerPort = 0;
     public static final int kRightControllerPort = 1;

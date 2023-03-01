@@ -26,6 +26,7 @@ import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
 import frc.robot.subsystems.DriveSubsystem;
+import frc.robot.subsystems.LiftSubsystem;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -36,6 +37,7 @@ import frc.robot.subsystems.DriveSubsystem;
 public class RobotContainer {
   // The robot's subsystems
   private final DriveSubsystem m_robotDrive = new DriveSubsystem();
+  private final LiftSubsystem m_lift = new LiftSubsystem();
 
   // The driver's controller
   Joystick m_leftJoystick = new Joystick(OIConstants.kLeftControllerPort);
@@ -88,22 +90,15 @@ public class RobotContainer {
     new JoystickButton(m_rightJoystick, OIConstants.kFieldRelativeButton)
         .debounce(0.1)
         .whileTrue (new RunCommand(
-        () -> m_robotDrive.toggleFieldRelative(),
-        m_robotDrive));
+            () -> m_robotDrive.toggleFieldRelative(),
+            m_robotDrive));
    
 
     new JoystickButton(m_buttonBoard, 1)
-    .debounce(0.1)
-    .whileTrue(new RunCommand(
-    () ->
-    ));
-
-
-    new JoystickButton(m_buttonBoard, 2)
-    .debounce(0.1)
-    .whileTrue(new RunComman(
-      () ->
-    ));
+        .debounce(0.1)
+        .whileTrue(new RunCommand(
+            () -> m_lift.setPosition(0.0, 0.0, 0.0),
+            m_lift));
 
 
   }
