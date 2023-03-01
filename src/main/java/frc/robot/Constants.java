@@ -231,10 +231,15 @@ public final class Constants {
     public static final int kButtonFloor = 8 ;
     public static final int kButtonStow = 9 ;
 
-    // Manual Arm control Overrides
-    public static final int kButton = ;
+    // Manual Lift Control Overrides
+    public static final int kButtonElevatorUp = 14 ;
     public static final int kButtonArmUp = 15 ;
-    public static final int kButton = ;
+    public static final int kButtonWristUp = 16 ;
+
+    // Manual Lift Control Overrides
+    public static final int kButtonElevatorDown = 18;
+    public static final int kButtonArmDown = 19 ;
+    public static final int kButtonWristDown = 20 ;
 
 
 
