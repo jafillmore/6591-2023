@@ -32,6 +32,11 @@ public class LiftSubsystem extends SubsystemBase {
 
   private final SparkMaxPIDController m_armPIDController = m_armSparkMax.getPIDController();
   private final SparkMaxPIDController m_wristPIDController = m_wristSparkMax.getPIDController();
+
+  double m_elevatorTargetHeight = 0;
+  double m_armTargetAngle = 0;
+  double m_wristTargetAngle = 0;
+
   
   
   public LiftSubsystem() {
@@ -77,6 +82,8 @@ public class LiftSubsystem extends SubsystemBase {
   
     m_armSparkMax.burnFlash();
     m_wristSparkMax.burnFlash();
+    m_leftIntakeSpark.burnFlash();
+    m_rightIntakeSparkMax.burnFlash();
 
   }
 
@@ -86,9 +93,13 @@ public class LiftSubsystem extends SubsystemBase {
 
     /* Lift Actual Positions */
     
-    SmartDashboard.putNumber("Elevator Height", m_elevatorSrx.getSelectedSensorPosition());
-    SmartDashboard.putNumber("Arm Angle", m_armEncoder.getPosition());
-    SmartDashboard.putNumber("Wrist Angle", m_wristEncoder.getPosition());
+    SmartDashboard.putNumber("Elevator Height - Actual", m_elevatorSrx.getSelectedSensorPosition());
+    SmartDashboard.putNumber("Arm Angle - Actual", m_armEncoder.getPosition());
+    SmartDashboard.putNumber("Wrist Angle - Actual", m_wristEncoder.getPosition());
+
+    SmartDashboard.putNumber("Elevator Height - Target", m_elevatorTargetHeight);
+    SmartDashboard.putNumber("Arm Angle - Target", m_armTargetAngle);
+    SmartDashboard.putNumber("Wrist Angle - Target", m_wristTargetAngle);
     
      
   }
@@ -96,6 +107,9 @@ public class LiftSubsystem extends SubsystemBase {
  
   //  Method to set the lift position
   public void setPosition(double elevatorTargetHeight, double armTargetAngle, double wristTargetAngle) {
+    m_elevatorTargetHeight = elevatorTargetHeight;
+    m_armTargetAngle = armTargetAngle;
+    m_wristTargetAngle = wristTargetAngle;
 
     m_elevatorSrx.set(ControlMode.Position, elevatorTargetHeight);
     m_armPIDController.setReference(armTargetAngle, CANSparkMax.ControlType.kPosition);  // Set the arm PID target to the desired angle
@@ -104,6 +118,18 @@ public class LiftSubsystem extends SubsystemBase {
 
   }
  
+  // STUFF THAT NEEDS TO BE ADDED
+
+  // Method to turn off the intake motors
+
+  // Method to turn on the intake motors in foward
+
+  // Method to turn on the intake motors in Reverse
+
+
+
+  
+
 
 
 }
