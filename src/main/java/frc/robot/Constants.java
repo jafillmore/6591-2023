@@ -150,6 +150,8 @@ public final class Constants {
     public static final double kWristMinOutput = -1;
     public static final double kWristMaxOutput = 1;
 
+    public static final double kIntakeMaxSpeed = 1;
+
     
     public static final boolean kElevatorInversion = false;
     public static final boolean kArmInversion = false;
@@ -220,9 +222,9 @@ public final class Constants {
 
     // Placement Buttons
     public static final int kButtonTopCone = 1 ;
-    public static final int kButtonMidleCone = 2 ;
+    public static final int kButtonMiddleCone = 2 ;
     public static final int kButtonTopCube = 3 ;
-    public static final int kButtonMiddleCone = 4 ;
+    public static final int kButtonMiddleCube = 4 ;
     public static final int kButtonHybrid = 5 ;
 
     // Pick-up Buttons
@@ -232,14 +234,14 @@ public final class Constants {
     public static final int kButtonStow = 9 ;
 
     // Manual Lift Control Overrides
-    public static final int kButtonElevatorUp = 14 ;
-    public static final int kButtonArmUp = 15 ;
-    public static final int kButtonWristUp = 16 ;
+    public static final int kButtonElevatorUp = 11;
+    public static final int kButtonArmUp = 13;
+    public static final int kButtonWristUp = 15 ;
 
     // Manual Lift Control Overrides
-    public static final int kButtonElevatorDown = 18;
-    public static final int kButtonArmDown = 19 ;
-    public static final int kButtonWristDown = 20 ;
+    public static final int kButtonElevatorDown = 12;
+    public static final int kButtonArmDown = 14;
+    public static final int kButtonWristDown = 16 ;
 
 
 
