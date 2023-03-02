@@ -26,6 +26,8 @@ public class LiftSubsystem extends SubsystemBase {
   private final CANSparkMax m_wristSparkMax = new CANSparkMax(LiftConstants.kWristMotorCanId, MotorType.kBrushed);
   private final CANSparkMax m_leftIntakeSpark = new CANSparkMax(LiftConstants.kLeftIntakeMotorCanId, MotorType.kBrushed);
   private final CANSparkMax m_rightIntakeSparkMax = new CANSparkMax(LiftConstants.kRightIntakeMotorCanId, MotorType.kBrushed);
+  // add intake motor group
+
 
   private final RelativeEncoder m_armEncoder = m_armSparkMax.getEncoder();
   private final RelativeEncoder m_wristEncoder = m_wristSparkMax.getEncoder();
@@ -33,9 +35,9 @@ public class LiftSubsystem extends SubsystemBase {
   private final SparkMaxPIDController m_armPIDController = m_armSparkMax.getPIDController();
   private final SparkMaxPIDController m_wristPIDController = m_wristSparkMax.getPIDController();
 
-  public double m_elevatorTargetHeight = 0;
-  double m_armTargetAngle = 0;
-  double m_wristTargetAngle = 0;
+  public static double m_elevatorTargetHeight = 0;
+  public static double m_armTargetAngle = 0;
+  public static double m_wristTargetAngle = 0;
 
   
   
@@ -133,10 +135,22 @@ public class LiftSubsystem extends SubsystemBase {
   // STUFF THAT NEEDS TO BE ADDED (with corresponding buttons)
 
   // Method to turn off the intake motors
+  public void setIntakeOff() {
+    m_leftIntakeSpark.set(0);
+    m_rightIntakeSparkMax.set(0);
+  }
 
   // Method to turn on the intake motors in foward
+  public void setIntakeForward() {
+      m_leftIntakeSpark.set(LiftConstants.kIntakeMaxSpeed);
+      m_rightIntakeSparkMax.set(LiftConstants.kIntakeMaxSpeed);
+  }
 
   // Method to turn on the intake motors in Reverse
+  public void setIntakeReverse() {
+    m_leftIntakeSpark.set(-1*(LiftConstants.kIntakeMaxSpeed));
+    m_rightIntakeSparkMax.set(-1*(LiftConstants.kIntakeMaxSpeed));
+  }
 
 
 
