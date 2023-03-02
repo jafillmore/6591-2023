@@ -28,7 +28,6 @@ import frc.robot.Constants.OIConstants;
 import frc.robot.Constants.PositionConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
-import frc.robot.subsystems.LiftSubsystem;
 
 /*
  * This class is where the bulk of the robot should be declared.  Since Command-based is a
@@ -104,52 +103,60 @@ public class RobotContainer {
             () -> m_lift.setPosition(PositionConstants.kTopCone[1], PositionConstants.kTopCone[2], PositionConstants.kTopCone[3]),
             m_lift));
 
+    //Manual Override for Elevator Up
     new JoystickButton(m_buttonBoard, OIConstants.kButtonElevatorUp)
     .debounce(0.1)
-    .whileTrue(new RunCommand(
+    .onTrue(new RunCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight+1 , LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle)));
 
+    //Manual Override for Elevator Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonElevatorDown)
     .debounce(0.1)
-    .whileTrue(new RunCommand(
+    .onTrue(new RunCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight-1, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle)
       ));
 
-      new JoystickButton(m_buttonBoard, OIConstants.kButtonArmUp)
-      .debounce(0.1)
-      .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle+1, LiftSubsystem.m_wristTargetAngle)
-      ));
+    //Manual Override for Arm Up
+    new JoystickButton(m_buttonBoard, OIConstants.kButtonArmUp)
+    .debounce(0.1)
+    .onTrue(new RunCommand(
+      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle+1, LiftSubsystem.m_wristTargetAngle)
+    ));
 
-      new JoystickButton(m_buttonBoard, OIConstants.kButtonArmDown)
-      .debounce(0.1)
-      .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle-1, LiftSubsystem.m_wristTargetAngle)
-      ));
+    //Manual Override for Arm Down
+    new JoystickButton(m_buttonBoard, OIConstants.kButtonArmDown)
+    .debounce(0.1)
+    .onTrue(new RunCommand(
+      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle-1, LiftSubsystem.m_wristTargetAngle)
+    ));
 
+    //Manual Override Wrist Up
     new JoystickButton(m_buttonBoard, OIConstants.kButtonWristUp)
     .debounce(0.1)
-    .whileTrue(new RunCommand(
+    .onTrue(new RunCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle+1)
     ));
 
+    //Manual Override Wrist Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonWristDown)
     .debounce(0.1)
-    .whileTrue(new RunCommand(
+    .onTrue(new RunCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle-1)
     ));
 
+
+    // Intake
     new JoystickButton(m_leftJoystick, OIConstants.kButtonIntake)
     .debounce(0.1)
-    .whileTrue(new RunCommand(
-      () -> m_lift.setIntakeForward()
-    ));
+    .onTrue(new RunCommand( () -> m_lift.setIntakeForward()))
+    .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
 
+    // Eject
     new JoystickButton(m_leftJoystick, 2)
     .debounce(0.1)
-    .whileTrue(new RunCommand(
-      () -> m_lift.setIntakeReverse()
-    ));
+    .onTrue(new RunCommand( () -> m_lift.setIntakeReverse()))
+    .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
+
   }
 
   public static SendableChooser<Command> mChooser = new SendableChooser<>();
