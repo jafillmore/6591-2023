@@ -87,6 +87,8 @@ public class RobotContainer {
             () -> m_robotDrive.zeroHeading(),
             m_robotDrive));
 
+  }
+
     /*   //  Dont think we need this anymore...
     new JoystickButton(m_rightJoystick, OIConstants.kFieldRelativeButton)
         .debounce(0.1)
@@ -95,7 +97,7 @@ public class RobotContainer {
             m_robotDrive));
     */
 
-    
+    /*
     //Position Lift for Upper Posts
     new JoystickButton(m_buttonBoard, 1)
         .debounce(0.1)
@@ -158,8 +160,8 @@ public class RobotContainer {
     .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
 
   }
-
-  public static SendableChooser<Command> mChooser = new SendableChooser<>();
+*/
+  // public static SendableChooser<Command> mChooser = new SendableChooser<>();
 
   //Add commands to the autonomous command chooser
 

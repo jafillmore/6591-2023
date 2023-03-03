@@ -20,10 +20,10 @@ public class LiftSubsystem extends SubsystemBase {
   /** Creates a new LiftSubsystem. */
 
 
-  private final TalonSRX m_elevatorSrx = new TalonSRX(LiftConstants.kElevatorMotorCanId);
+  // private final TalonSRX m_elevatorSrx = new TalonSRX(LiftConstants.kElevatorMotorCanId);
 
   private final CANSparkMax m_armSparkMax = new CANSparkMax(LiftConstants.kArmMotorCanId, MotorType.kBrushless);
-  private final CANSparkMax m_wristSparkMax = new CANSparkMax(LiftConstants.kWristMotorCanId, MotorType.kBrushed);
+  private final CANSparkMax m_wristSparkMax = new CANSparkMax(LiftConstants.kWristMotorCanId, MotorType.kBrushless);
   private final CANSparkMax m_leftIntakeSpark = new CANSparkMax(LiftConstants.kLeftIntakeMotorCanId, MotorType.kBrushed);
   private final CANSparkMax m_rightIntakeSparkMax = new CANSparkMax(LiftConstants.kRightIntakeMotorCanId, MotorType.kBrushed);
   // add intake motor group
@@ -39,10 +39,10 @@ public class LiftSubsystem extends SubsystemBase {
   public static double m_armTargetAngle = 0;
   public static double m_wristTargetAngle = 0;
 
-  
+ 
   
   public LiftSubsystem() {
-
+  
     // Factory reset, so we get the SPARKS MAX to a known state before configuring
     // them. This is useful in case a SPARK MAX is swapped out.
     m_armSparkMax.restoreFactoryDefaults();
@@ -50,13 +50,13 @@ public class LiftSubsystem extends SubsystemBase {
     m_leftIntakeSpark.restoreFactoryDefaults();
     m_rightIntakeSparkMax.restoreFactoryDefaults();
 
-    m_elevatorSrx.setInverted(LiftConstants.kElevatorInversion);
+    // m_elevatorSrx.setInverted(LiftConstants.kElevatorInversion);
     m_armSparkMax.setInverted(LiftConstants.kArmInversion);
     m_wristSparkMax.setInverted(LiftConstants.kWristInversion);
     m_leftIntakeSpark.setInverted(LiftConstants.kLeftIntakeInversion);
     m_rightIntakeSparkMax.setInverted(LiftConstants.kRightIntiakeInversion);
 
-    m_elevatorSrx.setNeutralMode(LiftConstants.kElevatorNeutralMode);
+    // m_elevatorSrx.setNeutralMode(LiftConstants.kElevatorNeutralMode);
     m_armSparkMax.setIdleMode(LiftConstants.kArmIdleMode);
     m_wristSparkMax.setIdleMode(LiftConstants.kwristIdleMode);
     m_leftIntakeSpark.setIdleMode(LiftConstants.kLeftIntakeIdleMode);
@@ -98,15 +98,15 @@ public class LiftSubsystem extends SubsystemBase {
     m_wristSparkMax.burnFlash();
     m_leftIntakeSpark.burnFlash();
     m_rightIntakeSparkMax.burnFlash();
-
+    
   }
-
+  
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
 
     /* Lift Actual Positions */
-    
+   /*
     SmartDashboard.putNumber("Elevator Height - Actual", m_elevatorSrx.getSelectedSensorPosition());
     SmartDashboard.putNumber("Arm Angle - Actual", m_armEncoder.getPosition());
     SmartDashboard.putNumber("Wrist Angle - Actual", m_wristEncoder.getPosition());
@@ -114,7 +114,7 @@ public class LiftSubsystem extends SubsystemBase {
     SmartDashboard.putNumber("Elevator Height - Target", m_elevatorTargetHeight);
     SmartDashboard.putNumber("Arm Angle - Target", m_armTargetAngle);
     SmartDashboard.putNumber("Wrist Angle - Target", m_wristTargetAngle);
-    
+ */  
      
   }
 
@@ -125,7 +125,7 @@ public class LiftSubsystem extends SubsystemBase {
     m_armTargetAngle = armTargetAngle;
     m_wristTargetAngle = wristTargetAngle;
 
-    m_elevatorSrx.set(ControlMode.Position, elevatorTargetHeight);
+    // m_elevatorSrx.set(ControlMode.Position, elevatorTargetHeight);
     m_armPIDController.setReference(armTargetAngle, CANSparkMax.ControlType.kPosition);  // Set the arm PID target to the desired angle
     m_wristPIDController.setReference(wristTargetAngle, CANSparkMax.ControlType.kPosition);  // Set the arm PID target to the desired angle
     

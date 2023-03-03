@@ -83,8 +83,8 @@ public class DriveSubsystem extends SubsystemBase {
             m_rearRight.getPosition()
         });
 
-
-        /* IMU Status */  
+/* 
+        /* IMU Status   
         SmartDashboard.putBoolean(  "IMU_Connected",  m_gyro.isConnected());
         SmartDashboard.putNumber(   "IMU_Temp_C",     m_gyro.getTempC());        
         SmartDashboard.putNumber(   "IMU_TotalYaw",   m_gyro.getAngle());
@@ -93,7 +93,7 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putNumber(   "IMU_Roll",       m_gyro.getRoll());
 
 
-        /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) */
+        /* Display Processed Acceleration Data (Linear Acceleration, Motion Detect) 
           
         SmartDashboard.putNumber(   "IMU_Accel_X",          m_gyro.getWorldLinearAccelX());
         SmartDashboard.putNumber(   "IMU_Accel_Y",          m_gyro.getWorldLinearAccelY());
@@ -101,30 +101,30 @@ public class DriveSubsystem extends SubsystemBase {
         SmartDashboard.putBoolean(  "IMU_IsRotating",       m_gyro.isRotating());
 
 
-        /* Swerve Drive Module Actual Positions */
+        /* Swerve Drive Module Actual Positions 
         SmartDashboard.putNumber("Swerve: LF Turn Angle - Deg", Math.toDegrees(m_frontLeft.m_turningEncoder.getPosition()));
         SmartDashboard.putNumber("Swerve: RF Turn Angle - Deg", Math.toDegrees(m_frontRight.m_turningEncoder.getPosition()));
         SmartDashboard.putNumber("Swerve: LR Turn Angle - Deg", Math.toDegrees(m_rearLeft.m_turningEncoder.getPosition()));
         SmartDashboard.putNumber("Swerve: RR Turn Angle - Deg", Math.toDegrees(m_rearRight.m_turningEncoder.getPosition()));
 
-        /* Swerve Drive Module Desired Positions */
+        /* Swerve Drive Module Desired Positions 
         SmartDashboard.putNumber("Swerve: LF Desired Angle - Deg", m_frontLeft.m_desiredState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RF Desired Angle - Deg", m_frontRight.m_desiredState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: LR Desired Angle - Deg", m_rearLeft.m_desiredState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RR Desired Angle - Deg", m_rearRight.m_desiredState.angle.getDegrees());
 
-        /* Swerve Drive Module Optimized Positions */
+        /* Swerve Drive Module Optimized Positions 
         SmartDashboard.putNumber("Swerve: LF Opt. Angle - Deg", m_frontLeft.m_outputOptimizedState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RF Opt. Angle - Deg", m_frontRight.m_outputOptimizedState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: LR Opt. Angle - Deg", m_rearLeft.m_outputOptimizedState.angle.getDegrees());
         SmartDashboard.putNumber("Swerve: RR Opt. Angle - Deg", m_rearRight.m_outputOptimizedState.angle.getDegrees());
 
-        /* command counters for debuging */
+        /* command counters for debuging 
         SmartDashboard.putNumber("Count: Set X Count", setXcount);
         SmartDashboard.putNumber("Count: Reset Gyro", resetGyroCount);
         SmartDashboard.putNumber("Count: Field Relative", fieldRelativeCount);
 
-
+        */
 
   }
 
