@@ -9,6 +9,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 // import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LiftConstants;
@@ -25,14 +26,14 @@ public class LiftSubsystem extends SubsystemBase {
   private final CANSparkMax m_rightIntakeSparkMax = new CANSparkMax(LiftConstants.kRightIntakeMotorCanId, MotorType.kBrushed);
   // add intake motor group
 
-
+  private final RelativeEncoder m_elevatorEncoder = m_elevatorSparkMax.getEncoder();
   private final RelativeEncoder m_armEncoder = m_armSparkMax.getEncoder();
   private final RelativeEncoder m_wristEncoder = m_wristSparkMax.getEncoder();
-  private final RelativeEncoder m_elevatorEncoder = m_elevatorSparkMax.getEncoder();
-
+  
+  private final SparkMaxPIDController m_elevatorPIDController = m_elevatorSparkMax.getPIDController();
   private final SparkMaxPIDController m_armPIDController = m_armSparkMax.getPIDController();
   private final SparkMaxPIDController m_wristPIDController = m_wristSparkMax.getPIDController();
-  private final SparkMaxPIDController m_elevatorPIDController = m_elevatorSparkMax.getPIDController();
+  
 
   public static double m_elevatorTargetHeight = 0;
   public static double m_armTargetAngle = 0;
@@ -63,7 +64,7 @@ public class LiftSubsystem extends SubsystemBase {
     m_rightIntakeSparkMax.setIdleMode(LiftConstants.kRightIntakeIdleMode);
 
     
-  
+    m_elevatorPIDController.setFeedbackDevice(m_elevatorEncoder);
     m_armPIDController.setFeedbackDevice(m_armEncoder);
     m_wristPIDController.setFeedbackDevice(m_wristEncoder);
   
@@ -73,7 +74,17 @@ public class LiftSubsystem extends SubsystemBase {
     m_wristEncoder.setPositionConversionFactor(LiftConstants.kWristEncoderPositionFactor);
     m_wristEncoder.setVelocityConversionFactor(LiftConstants.kWristEncoderVelocityFactor);
     
-  
+
+
+    // Set the PID gains for the elevator motor. Note these are example gains, and you
+    // may need to tune them for your own robot!
+    m_elevatorPIDController.setP(LiftConstants.kElevatorP);
+    m_elevatorPIDController.setI(LiftConstants.kElevatorI);
+    m_elevatorPIDController.setD(LiftConstants.kElevatorD);
+    m_elevatorPIDController.setFF(LiftConstants.kElevatorFF);
+    m_elevatorPIDController.setOutputRange(LiftConstants.kElevatorMinOutput,
+     LiftConstants.kElevatorMaxOutput);
+    
     // Set the PID gains for the driving motor. Note these are example gains, and you
     // may need to tune them for your own robot!
     m_armPIDController.setP(LiftConstants.kArmP);
@@ -93,14 +104,9 @@ public class LiftSubsystem extends SubsystemBase {
       LiftConstants.kWristMaxOutput);
     
     
-    m_elevatorPIDController.setP(LiftConstants.kElevatorP);
-    m_elevatorPIDController.setI(LiftConstants.kElevatorI);
-    m_elevatorPIDController.setD(LiftConstants.kElevatorD);
-    m_elevatorPIDController.setFF(LiftConstants.kElevatorFF);
-    m_elevatorPIDController.setOutputRange(LiftConstants.kElevatorMinOutput,
-     LiftConstants.kElevatorMaxOutput);
+
   
-  
+    m_elevatorSparkMax.burnFlash();
     m_armSparkMax.burnFlash();
     m_wristSparkMax.burnFlash();
     m_leftIntakeSpark.burnFlash();
@@ -113,15 +119,15 @@ public class LiftSubsystem extends SubsystemBase {
     // This method will be called once per scheduler run
 
     /* Lift Actual Positions */
-   /*
-    SmartDashboard.putNumber("Elevator Height - Actual", m_elevatorSrx.getSelectedSensorPosition());
+   
+    SmartDashboard.putNumber("Elevator Height - Actual", m_elevatorEncoder.getPosition());
     SmartDashboard.putNumber("Arm Angle - Actual", m_armEncoder.getPosition());
     SmartDashboard.putNumber("Wrist Angle - Actual", m_wristEncoder.getPosition());
 
     SmartDashboard.putNumber("Elevator Height - Target", m_elevatorTargetHeight);
     SmartDashboard.putNumber("Arm Angle - Target", m_armTargetAngle);
     SmartDashboard.putNumber("Wrist Angle - Target", m_wristTargetAngle);
- */  
+  
      
   }
 
@@ -158,10 +164,6 @@ public class LiftSubsystem extends SubsystemBase {
     m_leftIntakeSpark.set(-1*(LiftConstants.kIntakeMaxSpeed));
     m_rightIntakeSparkMax.set(-1*(LiftConstants.kIntakeMaxSpeed));
   }
-
-
-
-  
 
 
 
