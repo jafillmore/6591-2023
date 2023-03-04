@@ -5,8 +5,6 @@
 package frc.robot;
 
 import com.revrobotics.CANSparkMax.IdleMode;
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-
 import edu.wpi.first.math.geometry.Translation2d;
 import edu.wpi.first.math.kinematics.SwerveDriveKinematics;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
@@ -28,8 +26,8 @@ public final class Constants {
   public static final class DriveConstants {
     // Driving Parameters - Note that these are not the maximum capable speeds of
     // the robot, rather the allowed maximum speeds
-    public static final double kMaxSpeedMetersPerSecond = 1.0;
-    public static final double kMaxAngularSpeed = 2 * Math.PI; // radians per second
+    public static final double kMaxSpeedMetersPerSecond = 3.0;
+    public static final double kMaxAngularSpeed = 4.0; // Was 2 pi radians per second
 
     // Chassis configuration
     public static final double kTrackWidth = Units.inchesToMeters(21);
@@ -150,6 +148,13 @@ public final class Constants {
     public static final double kWristMinOutput = -1;
     public static final double kWristMaxOutput = 1;
 
+    public static final double kElevatorP = 1;
+    public static final double kElevatorI = 0;
+    public static final double kElevatorD = 1;
+    public static final double kElevatorFF = 0.0;
+    public static final double kElevatorMinOutput = -1;
+    public static final double kElevatorMaxOutput = 1;
+
     public static final double kIntakeMaxSpeed = 1;
 
     
@@ -160,7 +165,7 @@ public final class Constants {
     public static final boolean kRightIntiakeInversion = true;
 
     
-    public static final NeutralMode kElevatorNeutralMode = NeutralMode.Brake;
+    public static final IdleMode kElevatorNeutralMode = IdleMode.kBrake;
     public static final IdleMode kArmIdleMode = IdleMode.kBrake;
     public static final IdleMode kwristIdleMode = IdleMode.kBrake;
     public static final IdleMode kLeftIntakeIdleMode = IdleMode.kBrake;
@@ -257,7 +262,7 @@ public final class Constants {
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 0.25; // example was 3
+    public static final double kMaxSpeedMetersPerSecond = 0.5; // example was 3
     public static final double kMaxAccelerationMetersPerSecondSquared = 1.5; // example default was 3
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;

@@ -4,14 +4,12 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.RelativeEncoder;
 import com.revrobotics.SparkMaxPIDController;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+// import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.LiftConstants;
 
@@ -20,8 +18,7 @@ public class LiftSubsystem extends SubsystemBase {
   /** Creates a new LiftSubsystem. */
 
 
-  // private final TalonSRX m_elevatorSrx = new TalonSRX(LiftConstants.kElevatorMotorCanId);
-
+  private final CANSparkMax m_elevatorSparkMax = new CANSparkMax(LiftConstants.kElevatorMotorCanId, MotorType.kBrushless);
   private final CANSparkMax m_armSparkMax = new CANSparkMax(LiftConstants.kArmMotorCanId, MotorType.kBrushless);
   private final CANSparkMax m_wristSparkMax = new CANSparkMax(LiftConstants.kWristMotorCanId, MotorType.kBrushless);
   private final CANSparkMax m_leftIntakeSpark = new CANSparkMax(LiftConstants.kLeftIntakeMotorCanId, MotorType.kBrushed);
@@ -31,9 +28,11 @@ public class LiftSubsystem extends SubsystemBase {
 
   private final RelativeEncoder m_armEncoder = m_armSparkMax.getEncoder();
   private final RelativeEncoder m_wristEncoder = m_wristSparkMax.getEncoder();
+  private final RelativeEncoder m_elevatorEncoder = m_elevatorSparkMax.getEncoder();
 
   private final SparkMaxPIDController m_armPIDController = m_armSparkMax.getPIDController();
   private final SparkMaxPIDController m_wristPIDController = m_wristSparkMax.getPIDController();
+  private final SparkMaxPIDController m_elevatorPIDController = m_elevatorSparkMax.getPIDController();
 
   public static double m_elevatorTargetHeight = 0;
   public static double m_armTargetAngle = 0;
@@ -45,18 +44,19 @@ public class LiftSubsystem extends SubsystemBase {
   
     // Factory reset, so we get the SPARKS MAX to a known state before configuring
     // them. This is useful in case a SPARK MAX is swapped out.
+    m_elevatorSparkMax.restoreFactoryDefaults();
     m_armSparkMax.restoreFactoryDefaults();
     m_wristSparkMax.restoreFactoryDefaults();
     m_leftIntakeSpark.restoreFactoryDefaults();
     m_rightIntakeSparkMax.restoreFactoryDefaults();
 
-    // m_elevatorSrx.setInverted(LiftConstants.kElevatorInversion);
+    m_elevatorSparkMax.setInverted(LiftConstants.kElevatorInversion);
     m_armSparkMax.setInverted(LiftConstants.kArmInversion);
     m_wristSparkMax.setInverted(LiftConstants.kWristInversion);
     m_leftIntakeSpark.setInverted(LiftConstants.kLeftIntakeInversion);
     m_rightIntakeSparkMax.setInverted(LiftConstants.kRightIntiakeInversion);
 
-    // m_elevatorSrx.setNeutralMode(LiftConstants.kElevatorNeutralMode);
+    m_elevatorSparkMax.setIdleMode(LiftConstants.kElevatorNeutralMode);
     m_armSparkMax.setIdleMode(LiftConstants.kArmIdleMode);
     m_wristSparkMax.setIdleMode(LiftConstants.kwristIdleMode);
     m_leftIntakeSpark.setIdleMode(LiftConstants.kLeftIntakeIdleMode);
@@ -91,7 +91,14 @@ public class LiftSubsystem extends SubsystemBase {
     m_wristPIDController.setFF(LiftConstants.kWristFF);
     m_wristPIDController.setOutputRange(LiftConstants.kWristMinOutput,
       LiftConstants.kWristMaxOutput);
-  
+    
+    
+    m_elevatorPIDController.setP(LiftConstants.kElevatorP);
+    m_elevatorPIDController.setI(LiftConstants.kElevatorI);
+    m_elevatorPIDController.setD(LiftConstants.kElevatorD);
+    m_elevatorPIDController.setFF(LiftConstants.kElevatorFF);
+    m_elevatorPIDController.setOutputRange(LiftConstants.kElevatorMinOutput,
+     LiftConstants.kElevatorMaxOutput);
   
   
     m_armSparkMax.burnFlash();
