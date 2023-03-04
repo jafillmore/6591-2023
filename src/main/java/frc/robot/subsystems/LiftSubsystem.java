@@ -68,9 +68,11 @@ public class LiftSubsystem extends SubsystemBase {
     m_armPIDController.setFeedbackDevice(m_armEncoder);
     m_wristPIDController.setFeedbackDevice(m_wristEncoder);
   
+    m_armEncoder.setPositionConversionFactor(LiftConstants.kelevatorEncoderPositionFactor);
     m_armEncoder.setPositionConversionFactor(LiftConstants.kArmEncoderPositionFactor);
     m_armEncoder.setVelocityConversionFactor(LiftConstants.kArmEncoderVelocityFactor);
   
+    m_elevatorEncoder.setVelocityConversionFactor(LiftConstants.kelevatorEncoderVelocityFactor);
     m_wristEncoder.setPositionConversionFactor(LiftConstants.kWristEncoderPositionFactor);
     m_wristEncoder.setVelocityConversionFactor(LiftConstants.kWristEncoderVelocityFactor);
     
