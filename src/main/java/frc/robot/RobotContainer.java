@@ -99,15 +99,9 @@ public class RobotContainer {
 
       
 
-  }
+  
 
-    /*   //  Dont think we need this anymore...
-    new JoystickButton(m_rightJoystick, OIConstants.kFieldRelativeButton)
-        .debounce(0.1)
-        .whileTrue (new RunCommand(
-            () -> m_robotDrive.toggleFieldRelative(),
-            m_robotDrive));
-    */
+
 
     /*
     //Position Lift for Upper Posts
@@ -157,7 +151,7 @@ public class RobotContainer {
     .onTrue(new RunCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle-1)
     ));
-
+    */
 
     // Intake
     new JoystickButton(m_leftJoystick, OIConstants.kButtonIntake)
@@ -172,7 +166,7 @@ public class RobotContainer {
     .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
 
   }
-*/
+
   // public static SendableChooser<Command> mChooser = new SendableChooser<>();
 
   //Add commands to the autonomous command chooser
