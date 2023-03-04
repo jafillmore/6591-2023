@@ -87,22 +87,6 @@ public class RobotContainer {
             () -> m_robotDrive.zeroHeading(),
             m_robotDrive));
 
-    new JoystickButton(m_leftJoystick, OIConstants.kButtonIntake)
-    .debounce(0.1)
-    .whileTrue(new RunCommand(
-      () -> m_lift.setIntakeForward()));
-
-    new JoystickButton(m_leftJoystick, OIConstants.kButtonEject)
-    .debounce(0.1)
-    .whileTrue(new RunCommand(
-      () -> m_lift.setIntakeReverse()));
-
-      
-
-  
-
-
-
     /*
     //Position Lift for Upper Posts
     new JoystickButton(m_buttonBoard, 1)
@@ -154,13 +138,13 @@ public class RobotContainer {
     */
 
     // Intake
-    new JoystickButton(m_leftJoystick, OIConstants.kButtonIntake)
+    new JoystickButton(m_rightJoystick, OIConstants.kButtonIntake)
     .debounce(0.1)
     .onTrue(new RunCommand( () -> m_lift.setIntakeForward()))
     .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
 
     // Eject
-    new JoystickButton(m_leftJoystick, 2)
+    new JoystickButton(m_rightJoystick, OIConstants.kButtonEject)
     .debounce(0.1)
     .onTrue(new RunCommand( () -> m_lift.setIntakeReverse()))
     .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
