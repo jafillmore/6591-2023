@@ -128,6 +128,9 @@ public final class Constants {
     public static final int kLeftIntakeMotorCanId = 12 ;
     public static final int kRightIntakeMotorCanId = 13 ;
 
+    public static final double kelevatorEncoderPositionFactor = 1 ;
+    public static final double kelevatorEncoderVelocityFactor = (1/60.0) ;
+
     public static final double kArmEncoderPositionFactor = 1 ;
     public static final double kArmEncoderVelocityFactor = (1/60.0) ;
 
