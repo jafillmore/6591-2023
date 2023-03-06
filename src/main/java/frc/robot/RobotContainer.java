@@ -25,7 +25,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoConstants;
 import frc.robot.Constants.DriveConstants;
 import frc.robot.Constants.OIConstants;
-// import frc.robot.Constants.PositionConstants;
+import frc.robot.Constants.PositionConstants;
 import frc.robot.subsystems.DriveSubsystem;
 import frc.robot.subsystems.LiftSubsystem;
 
@@ -60,9 +60,9 @@ public class RobotContainer {
         // Turning is controlled by the X axis of the right stick.
         new RunCommand(
             () -> m_robotDrive.drive(
-                MathUtil.applyDeadband(-m_leftJoystick.getY(), 0.06),
-                MathUtil.applyDeadband(m_leftJoystick.getX(), 0.06),
-                MathUtil.applyDeadband(m_rightJoystick.getZ(), 0.06),
+                MathUtil.applyDeadband(-(m_leftJoystick.getY()*Math.abs(m_leftJoystick.getY())), 0.03),
+                MathUtil.applyDeadband(m_leftJoystick.getX()*Math.abs(m_leftJoystick.getX()), 0.03),
+                MathUtil.applyDeadband(m_rightJoystick.getZ()*Math.abs(m_rightJoystick.getZ()), 0.03),
               DriveConstants.driveFieldRelative),
             m_robotDrive));
              
@@ -87,7 +87,7 @@ public class RobotContainer {
             () -> m_robotDrive.zeroHeading(),
             m_robotDrive));
 
-    /*
+    
     //Position Lift for Upper Posts
     new JoystickButton(m_buttonBoard, 1)
         .debounce(0.1)
@@ -135,7 +135,7 @@ public class RobotContainer {
     .onTrue(new RunCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle-1)
     ));
-    */
+    
 
     // Intake
     new JoystickButton(m_rightJoystick, OIConstants.kButtonIntake)
@@ -161,6 +161,13 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
+    // Zero the gyro
+    m_robotDrive.zeroHeading();
+
+    // Zero the arm encoders
+    m_lift.resetArmEncoders();
+    
+    
     // Create config for trajectory
     TrajectoryConfig config = new TrajectoryConfig(
         AutoConstants.kMaxSpeedMetersPerSecond,

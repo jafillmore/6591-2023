@@ -129,13 +129,13 @@ public final class Constants {
     public static final int kRightIntakeMotorCanId = 13 ;
 
     public static final double kelevatorEncoderPositionFactor = 1 ;
-    public static final double kelevatorEncoderVelocityFactor = (1/60.0) ;
+    public static final double kelevatorEncoderVelocityFactor = (kelevatorEncoderPositionFactor/60.0) ;
 
     public static final double kArmEncoderPositionFactor = 1 ;
-    public static final double kArmEncoderVelocityFactor = (1/60.0) ;
+    public static final double kArmEncoderVelocityFactor = (kArmEncoderPositionFactor/60.0) ;
 
-    public static final double kWristEncoderPositionFactor = 1 ;
-    public static final double kWristEncoderVelocityFactor = (1/60.0) ;
+    public static final double kWristEncoderPositionFactor = 2.88 ;  // 360deg / 125:1 reduction ratio
+    public static final double kWristEncoderVelocityFactor = (kWristEncoderPositionFactor/60.0) ;
 
     public static final double kArmP = 0.3 ;  // Example was 0.4
     public static final double kArmI = 0 ;

@@ -141,6 +141,7 @@ public class LiftSubsystem extends SubsystemBase {
     m_wristTargetAngle = wristTargetAngle;
 
     // m_elevatorSrx.set(ControlMode.Position, elevatorTargetHeight);
+    m_elevatorPIDController.setReference(elevatorTargetHeight, CANSparkMax.ControlType.kPosition);  // Set the arm PID target to the desired angle
     m_armPIDController.setReference(armTargetAngle, CANSparkMax.ControlType.kPosition);  // Set the arm PID target to the desired angle
     m_wristPIDController.setReference(wristTargetAngle, CANSparkMax.ControlType.kPosition);  // Set the arm PID target to the desired angle
     
@@ -165,6 +166,14 @@ public class LiftSubsystem extends SubsystemBase {
   public void setIntakeReverse() {
     m_leftIntakeSpark.set(-1*(LiftConstants.kIntakeMaxSpeed));
     m_rightIntakeSparkMax.set(-1*(LiftConstants.kIntakeMaxSpeed));
+  }
+
+  // Method to Zero the encoders
+  public void resetArmEncoders() {
+    m_elevatorEncoder.setPosition(0);
+    m_armEncoder.setPosition(0);
+    m_wristEncoder.setPosition(0);
+
   }
 
 
