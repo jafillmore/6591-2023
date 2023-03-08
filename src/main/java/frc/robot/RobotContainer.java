@@ -82,11 +82,22 @@ public class RobotContainer {
             m_robotDrive));
 
     new JoystickButton(m_rightJoystick, OIConstants.kGyroRestButton)
-        .debounce(0.1)   
-        .whileTrue(new RunCommand(
+        .debounce(0.05)   
+        .onTrue(new RunCommand(
             () -> m_robotDrive.zeroHeading(),
             m_robotDrive));
 
+    // Intake
+    new JoystickButton(m_rightJoystick, OIConstants.kButtonIntake)
+    .debounce(0.1)
+    .onTrue(new RunCommand( () -> m_lift.setIntakeForward()))
+    .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
+
+    // Eject
+    new JoystickButton(m_rightJoystick, OIConstants.kButtonEject)
+    .debounce(0.1)
+    .onTrue(new RunCommand( () -> m_lift.setIntakeReverse()))
+    .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
     
     //Position Lift for Upper Posts
     new JoystickButton(m_buttonBoard, 1)
@@ -137,17 +148,6 @@ public class RobotContainer {
     ));
     
 
-    // Intake
-    new JoystickButton(m_rightJoystick, OIConstants.kButtonIntake)
-    .debounce(0.1)
-    .onTrue(new RunCommand( () -> m_lift.setIntakeForward()))
-    .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
-
-    // Eject
-    new JoystickButton(m_rightJoystick, OIConstants.kButtonEject)
-    .debounce(0.1)
-    .onTrue(new RunCommand( () -> m_lift.setIntakeReverse()))
-    .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
 
   }
 
