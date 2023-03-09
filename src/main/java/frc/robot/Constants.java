@@ -107,7 +107,7 @@ public final class Constants {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 1; // Example was 1.0
+    public static final double kTurningP = 0.75; // Example was 1.0
     public static final double kTurningI = 0;
     public static final double kTurningD = 20.0 ;  // Example was 0
     public static final double kTurningFF = 0.0;
@@ -137,40 +137,40 @@ public final class Constants {
     public static final double kWristEncoderPositionFactor = 2.88 ;  // 360deg / 125:1 reduction ratio
     public static final double kWristEncoderVelocityFactor = (kWristEncoderPositionFactor/60.0) ;
 
-    public static final double kArmP = 0.3 ;  // Example was 0.4
+    public static final double kArmP = 0.25 ;  // Example was 0.4
     public static final double kArmI = 0 ;
-    public static final double kArmD = 1 ;   // Example was 0.0
-    public static final double kArmFF = 0 ;
-    public static final double kArmMinOutput = -0.35;
-    public static final double kArmMaxOutput = 0.35;
+    public static final double kArmD = 5 ;   // Example was 0.0
+    public static final double kArmFF = 0.05 ;
+    public static final double kArmMinOutput = -0.05;
+    public static final double kArmMaxOutput = 0.2;
 
-    public static final double kWristP = 1; // Example was 1.0
+    public static final double kWristP = 1.0; // Example was 1.0
     public static final double kWristI = 0;
-    public static final double kWristD = 20.0 ;  // Example was 0
+    public static final double kWristD = 10.0 ;  // Example was 0
     public static final double kWristFF = 0.0;
-    public static final double kWristMinOutput = -0.25;
-    public static final double kWristMaxOutput = 0.25;
+    public static final double kWristMinOutput = -0.75;
+    public static final double kWristMaxOutput = 0.35;
 
     public static final double kElevatorP = 1;
     public static final double kElevatorI = 0;
     public static final double kElevatorD = 1;
     public static final double kElevatorFF = 0.0;
-    public static final double kElevatorMinOutput = -0.5;
-    public static final double kElevatorMaxOutput = 0.5;
+    public static final double kElevatorMinOutput = -1;
+    public static final double kElevatorMaxOutput = 1;
 
     public static final double kIntakeMaxSpeed = 1;
 
     
     public static final boolean kElevatorInversion = false;
     public static final boolean kArmInversion = false;
-    public static final boolean kWristInversion = false;
+    public static final boolean kWristInversion = true;
     public static final boolean kLeftIntakeInversion = true;
     public static final boolean kRightIntiakeInversion = false;
 
     
-    public static final IdleMode kElevatorNeutralMode = IdleMode.kCoast;
-    public static final IdleMode kArmIdleMode = IdleMode.kCoast;
-    public static final IdleMode kwristIdleMode = IdleMode.kCoast;
+    public static final IdleMode kElevatorNeutralMode = IdleMode.kBrake;
+    public static final IdleMode kArmIdleMode = IdleMode.kBrake;
+    public static final IdleMode kwristIdleMode = IdleMode.kBrake;
     public static final IdleMode kLeftIntakeIdleMode = IdleMode.kBrake;
     public static final IdleMode kRightIntakeIdleMode = IdleMode.kBrake;
   
@@ -180,12 +180,12 @@ public final class Constants {
   public static final class PositionConstants {
 
     // Delivery Positions
-    public static final double kTopCone[] = new double[] { 0.0, 90.0, -90.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kTopCone[] = new double[] { 0.0, 90.0, 90.0}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kMiddleCone[] = new double[] {7.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kTopCube[] = new double[] { 5.0, 95.0, 180.0}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kMiddleCube[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kHybrid[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
-
+ 
     // Pickup Positions
     public static final double kPortalRamp[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kPortalShelf[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle

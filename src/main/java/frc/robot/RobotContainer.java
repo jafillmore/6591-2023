@@ -17,6 +17,7 @@ import edu.wpi.first.math.trajectory.TrajectoryConfig;
 import edu.wpi.first.math.trajectory.TrajectoryGenerator;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.event.EventLoop;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -89,15 +90,27 @@ public class RobotContainer {
 
     // Intake
     new JoystickButton(m_rightJoystick, OIConstants.kButtonIntake)
-    //.debounce(0.1)
-    .whileTrue(new RunCommand( () -> m_lift.setIntakeForward()))
-    .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
+    .debounce(0.1)
+    .whileTrue(new RunCommand(() -> {
+        m_lift.setIntakeForward();
+    }));
+
+    new JoystickButton(m_rightJoystick, OIConstants.kButtonIntake)
+    .debounce(0.1)
+    .whileFalse(new RunCommand(() -> {
+        m_lift.setIntakeOff();
+    }));
 
     // Eject
     new JoystickButton(m_rightJoystick, OIConstants.kButtonEject)
     .debounce(0.1)
-    .whileTrue(new RunCommand( () -> m_lift.setIntakeReverse()))
-    .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
+    .whileTrue(new RunCommand( () -> m_lift.setIntakeReverse()));
+
+    new JoystickButton(m_rightJoystick, OIConstants.kButtonEject)
+    .debounce(0.1)
+    .whileFalse(new RunCommand(() -> {
+      m_lift.setIntakeOff();
+    }));
     
     //Position Lift for Upper Posts
     new JoystickButton(m_buttonBoard, OIConstants.kButtonTopCone)
