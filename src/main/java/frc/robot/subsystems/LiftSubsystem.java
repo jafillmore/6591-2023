@@ -176,6 +176,17 @@ public class LiftSubsystem extends SubsystemBase {
 
   }
 
+  // Method to Zero Targets
+  public void resetArmTargets() {
+    m_elevatorTargetHeight = 0;
+    m_armTargetAngle = 0;
+    m_wristTargetAngle = 0;  
+  }
 
+  // Method to reset encoders and Targets
+  public void reset() {
+    resetArmEncoders();
+    resetArmTargets();
+  }
 
 }

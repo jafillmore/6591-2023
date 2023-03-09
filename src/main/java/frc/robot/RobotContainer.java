@@ -89,77 +89,77 @@ public class RobotContainer {
 
     // Intake
     new JoystickButton(m_rightJoystick, OIConstants.kButtonIntake)
-    .debounce(0.1)
-    .onTrue(new RunCommand( () -> m_lift.setIntakeForward()))
+    //.debounce(0.1)
+    .whileTrue(new RunCommand( () -> m_lift.setIntakeForward()))
     .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
 
     // Eject
     new JoystickButton(m_rightJoystick, OIConstants.kButtonEject)
     .debounce(0.1)
-    .onTrue(new RunCommand( () -> m_lift.setIntakeReverse()))
+    .whileTrue(new RunCommand( () -> m_lift.setIntakeReverse()))
     .onFalse (new RunCommand( () -> m_lift.setIntakeOff()));
     
     //Position Lift for Upper Posts
     new JoystickButton(m_buttonBoard, OIConstants.kButtonTopCone)
         .debounce(0.1)
         .whileTrue(new RunCommand(
-            () -> m_lift.setPosition(PositionConstants.kTopCone[1], PositionConstants.kTopCone[2], PositionConstants.kTopCone[3]),
+            () -> m_lift.setPosition(PositionConstants.kTopCone[0], PositionConstants.kTopCone[1], PositionConstants.kTopCone[2]),
             m_lift));
 
     //Position Lift for Middle Posts
     new JoystickButton(m_buttonBoard, OIConstants.kButtonMiddleCone)
     .debounce(0.1)
     .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(PositionConstants.kMiddleCone[1], PositionConstants.kMiddleCone[2], PositionConstants.kMiddleCone[3]),
+        () -> m_lift.setPosition(PositionConstants.kMiddleCone[0], PositionConstants.kMiddleCone[1], PositionConstants.kMiddleCone[2]),
         m_lift));
 
     //Position Lift for Top Cube
     new JoystickButton(m_buttonBoard, OIConstants.kButtonTopCube)
     .debounce(0.1)
     .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(PositionConstants.kTopCube[1], PositionConstants.kTopCube[2], PositionConstants.kTopCube[3]),
+        () -> m_lift.setPosition(PositionConstants.kTopCube[0], PositionConstants.kTopCube[1], PositionConstants.kTopCube[2]),
         m_lift));
 
     //Position Lift for Middle Cube
     new JoystickButton(m_buttonBoard, OIConstants.kButtonMiddleCube)
     .debounce(0.1)
     .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(PositionConstants.kMiddleCube[1], PositionConstants.kMiddleCube[2], PositionConstants.kMiddleCube[3]),
+        () -> m_lift.setPosition(PositionConstants.kMiddleCube[0], PositionConstants.kMiddleCube[1], PositionConstants.kMiddleCube[2]),
         m_lift));
 
     //Position Lift for Hybrid Node (floor)
     new JoystickButton(m_buttonBoard, OIConstants.kButtonHybrid)
     .debounce(0.1)
     .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(PositionConstants.kHybrid[1], PositionConstants.kHybrid[2], PositionConstants.kHybrid[3]),
+        () -> m_lift.setPosition(PositionConstants.kHybrid[0], PositionConstants.kHybrid[1], PositionConstants.kHybrid[2]),
         m_lift));
 
     //Position Lift for Portal Ramp Pickup
     new JoystickButton(m_buttonBoard, OIConstants.kButtonRamp)
     .debounce(0.1)
     .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(PositionConstants.kPortalRamp[1], PositionConstants.kPortalRamp[2], PositionConstants.kPortalRamp[3]),
+        () -> m_lift.setPosition(PositionConstants.kPortalRamp[0], PositionConstants.kPortalRamp[1], PositionConstants.kPortalRamp[2]),
         m_lift));
 
     //Position Lift for Portal Shelf Pickup
     new JoystickButton(m_buttonBoard, OIConstants.kButtonShelf)
     .debounce(0.1)
     .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(PositionConstants.kPortalShelf[1], PositionConstants.kPortalShelf[2], PositionConstants.kPortalShelf[3]),
+        () -> m_lift.setPosition(PositionConstants.kPortalShelf[0], PositionConstants.kPortalShelf[1], PositionConstants.kPortalShelf[2]),
         m_lift));
 
     //Position Lift for Floor Pickup
     new JoystickButton(m_buttonBoard, OIConstants.kButtonFloor)
     .debounce(0.1)
     .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(PositionConstants.kFloor[1], PositionConstants.kFloor[2], PositionConstants.kFloor[3]),
+        () -> m_lift.setPosition(PositionConstants.kFloor[0], PositionConstants.kFloor[1], PositionConstants.kFloor[2]),
         m_lift));
 
     //Stow Lift
     new JoystickButton(m_buttonBoard, OIConstants.kButtonStow)
     .debounce(0.1)
     .whileTrue(new RunCommand(
-        () -> m_lift.setPosition(PositionConstants.kStow[1], PositionConstants.kStow[2], PositionConstants.kStow[3]),
+        () -> m_lift.setPosition(PositionConstants.kStow[0], PositionConstants.kStow[1], PositionConstants.kStow[2]),
         m_lift));
 
 
@@ -193,19 +193,28 @@ public class RobotContainer {
 
     //Manual Override Wrist Up
     new JoystickButton(m_buttonBoard, OIConstants.kButtonWristUp)
-    .debounce(0.1)
+    //.debounce(0.5)
     .onTrue(new RunCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle+1)
     ));
 
     //Manual Override Wrist Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonWristDown)
-    .debounce(0.1)
+    //.debounce(0.1)
     .onTrue(new RunCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle-1)
     ));
     
 
+
+    //Manual Target and encoder Reset
+    new JoystickButton(m_buttonBoard, OIConstants.kButtonEncoderReset)
+    //.debounce(0.1)
+    .onTrue(new RunCommand(
+      () -> m_lift.reset()
+    ));
+        
+    
 
   }
 
