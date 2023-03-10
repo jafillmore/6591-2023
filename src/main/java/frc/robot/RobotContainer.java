@@ -181,7 +181,7 @@ public class RobotContainer {
     new JoystickButton(m_buttonBoard, OIConstants.kButtonElevatorUp)
     .debounce(0.1)
     .onTrue(new RunCommand(
-      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight+1 , LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle)));
+      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight++ , LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle)));
 
     //Manual Override for Elevator Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonElevatorDown)
