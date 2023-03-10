@@ -189,7 +189,8 @@ public final class Constants {
     // Pickup Positions
     public static final double kPortalRamp[] = new double[] {70.0, 93, 150.0}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kPortalShelf[] = new double[] {60.0, 95.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
-    public static final double kFloor[] = new double[] {10.0, 10.0, 90.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kFloor[] = new double[] {0.0, 10.0, 30.0}; // Elevator Height, Arm Angle, Wrist Angle
+    
 
 
     // Stow Position
