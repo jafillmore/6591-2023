@@ -194,14 +194,14 @@ public class RobotContainer {
     new JoystickButton(m_buttonBoard, OIConstants.kButtonArmUp)
     .debounce(0.1)
     .onTrue(new InstantCommand(
-      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle+1, LiftSubsystem.m_wristTargetAngle)
+      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle+5, LiftSubsystem.m_wristTargetAngle)
     ));
 
     //Manual Override for Arm Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonArmDown)
     .debounce(0.1)
     .onTrue(new InstantCommand(
-      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle-1, LiftSubsystem.m_wristTargetAngle)
+      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle-5, LiftSubsystem.m_wristTargetAngle)
     ));
 
     //Manual Override Wrist Up
@@ -242,10 +242,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // Zero the gyro
-    // m_robotDrive.zeroHeading();
+    m_robotDrive.zeroHeading();
 
     // Zero the arm encoders
-    // m_lift.resetArmEncoders();
+    m_lift.resetArmEncoders();
     
     
     // Create config for trajectory
@@ -260,8 +260,7 @@ public class RobotContainer {
         // Start at the origin facing the +X direction
         new Pose2d(0, 0, new Rotation2d(0)),
         // Pass through these two interior waypoints, making an 's' curve path
-        List.of(new Translation2d(1, 0), new Translation2d(3,
-         0)),
+        List.of(new Translation2d(1, 0), new Translation2d(2, 0)),
         // End 3 meters straight ahead of where we started, facing forward
         new Pose2d(3, 0, new Rotation2d(0)),
         config);

@@ -100,7 +100,7 @@ public final class Constants {
     public static final double kTurningEncoderPositionPIDMinInput = 0; // radians
     public static final double kTurningEncoderPositionPIDMaxInput = Math.PI; // radians
 
-    public static final double kDrivingP = 0.3;  // Example was 0.4
+    public static final double kDrivingP = 0.1;  // Example was 0.04
     public static final double kDrivingI = 0;
     public static final double kDrivingD = 1;   // Example was 0.0
     public static final double kDrivingFF = 1 / kDriveWheelFreeSpeedRps;
@@ -142,7 +142,7 @@ public final class Constants {
     public static final double kArmD = 5 ;   // Example was 0.0
     public static final double kArmFF = 0.05 ;
     public static final double kArmMinOutput = -0.05;
-    public static final double kArmMaxOutput = 0.2;
+    public static final double kArmMaxOutput = 0.3;
 
     public static final double kWristP = 1.0; // Example was 1.0
     public static final double kWristI = 0;
@@ -261,16 +261,11 @@ public final class Constants {
 
 
 
-
-
-
-
-
   }
 
   public static final class AutoConstants {
-    public static final double kMaxSpeedMetersPerSecond = 0.5; // example was 3
-    public static final double kMaxAccelerationMetersPerSecondSquared = 1.5; // example default was 3
+    public static final double kMaxSpeedMetersPerSecond = 2.0; // example was 3
+    public static final double kMaxAccelerationMetersPerSecondSquared = 2.0; // example default was 3
     public static final double kMaxAngularSpeedRadiansPerSecond = Math.PI;
     public static final double kMaxAngularSpeedRadiansPerSecondSquared = Math.PI;
 
