@@ -180,16 +180,16 @@ public final class Constants {
   public static final class PositionConstants {
 
     // Delivery Positions
-    public static final double kTopCone[] = new double[] { 70.0, 97.0, 130}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kTopCone[] = new double[] { 0, 97.0, 130}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kMiddleCone[] = new double[] {0, 90.0, 90.0}; // Elevator Height, Arm Angle, Wrist Angle
-    public static final double kTopCube[] = new double[] { 70.0, 95.0, 130.0}; // Elevator Height, Arm Angle, Wrist Angle
-    public static final double kMiddleCube[] = new double[] {0.0, 90.0, 100.0}; // Elevator Height, Arm Angle, Wrist Angle
-    public static final double kHybrid[] = new double[] {6.0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kTopCube[] = new double[] { 0, 95.0, 130.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kMiddleCube[] = new double[] {0, 90.0, 100.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kHybrid[] = new double[] {0, 70.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
  
     // Pickup Positions
-    public static final double kPortalRamp[] = new double[] {70.0, 93, 150.0}; // Elevator Height, Arm Angle, Wrist Angle
-    public static final double kPortalShelf[] = new double[] {60.0, 95.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
-    public static final double kFloor[] = new double[] {0.0, 10.0, 30.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kPortalRamp[] = new double[] {0, 93, 150.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kPortalShelf[] = new double[] {0, 95.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
+    public static final double kFloor[] = new double[] {0, 10.0, 30.0}; // Elevator Height, Arm Angle, Wrist Angle
 
 
 
