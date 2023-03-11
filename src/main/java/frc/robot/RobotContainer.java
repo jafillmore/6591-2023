@@ -63,7 +63,7 @@ public class RobotContainer {
             () -> m_robotDrive.drive(
                 MathUtil.applyDeadband(-(m_leftJoystick.getY()*Math.abs(m_leftJoystick.getY())), 0.03),
                 MathUtil.applyDeadband(m_leftJoystick.getX()*Math.abs(m_leftJoystick.getX()), 0.03),
-                MathUtil.applyDeadband(m_rightJoystick.getZ()*Math.abs(m_rightJoystick.getZ()), 0.03),
+                MathUtil.applyDeadband(-m_rightJoystick.getZ()*Math.abs(m_rightJoystick.getZ()), 0.03),
               DriveConstants.driveFieldRelative),
             m_robotDrive));
              
@@ -242,10 +242,10 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     // Zero the gyro
-    m_robotDrive.zeroHeading();
+    // m_robotDrive.zeroHeading();
 
     // Zero the arm encoders
-    m_lift.resetArmEncoders();
+    // m_lift.resetArmEncoders();
     
     
     // Create config for trajectory

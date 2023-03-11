@@ -66,7 +66,7 @@ public final class Constants {
     public static final boolean kGyroReversed = false;
 
     // Toggle for field relative driving
-    public static boolean driveFieldRelative = false;
+    public static boolean driveFieldRelative = true;
   }
 
   public static final class ModuleConstants {
@@ -107,7 +107,7 @@ public final class Constants {
     public static final double kDrivingMinOutput = -1;
     public static final double kDrivingMaxOutput = 1;
 
-    public static final double kTurningP = 0.9; // Example was 1.0
+    public static final double kTurningP = 1.0; // Example was 1.0    
     public static final double kTurningI = 0;
     public static final double kTurningD = 20.0 ;  // Example was 0
     public static final double kTurningFF = 0.0;
@@ -158,7 +158,7 @@ public final class Constants {
     public static final double kElevatorMinOutput = -1;
     public static final double kElevatorMaxOutput = 1;
 
-    public static final double kIntakeMaxSpeed = 1;
+    public static final double kIntakeMaxSpeed = 0.5;
 
     
     public static final boolean kElevatorInversion = false;
@@ -190,7 +190,7 @@ public final class Constants {
     public static final double kPortalRamp[] = new double[] {70.0, 93, 150.0}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kPortalShelf[] = new double[] {60.0, 95.0, 205.0}; // Elevator Height, Arm Angle, Wrist Angle
     public static final double kFloor[] = new double[] {0.0, 10.0, 30.0}; // Elevator Height, Arm Angle, Wrist Angle
-    
+
 
 
     // Stow Position
