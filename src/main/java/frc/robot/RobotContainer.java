@@ -208,14 +208,14 @@ public class RobotContainer {
     new JoystickButton(m_buttonBoard, OIConstants.kButtonWristUp)
     //.debounce(0.5)
     .onTrue(new InstantCommand(
-      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle+1)
+      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle-5)
     ));
 
     //Manual Override Wrist Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonWristDown)
     //.debounce(0.1)
     .onTrue(new InstantCommand(
-      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle-1)
+      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle+5)
     ));
     
 
