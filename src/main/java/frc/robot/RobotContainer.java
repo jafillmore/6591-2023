@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.event.EventLoop;
 // import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SwerveControllerCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -180,41 +181,41 @@ public class RobotContainer {
     //Manual Override for Elevator Up
     new JoystickButton(m_buttonBoard, OIConstants.kButtonElevatorUp)
     .debounce(0.1)
-    .onTrue(new RunCommand(
-      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight++ , LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle)));
+    .onTrue(new InstantCommand(
+      () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight+1 , LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle)));
 
     //Manual Override for Elevator Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonElevatorDown)
     .debounce(0.1)
-    .onTrue(new RunCommand(
+    .onTrue(new InstantCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight-1, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle)
       ));
 
     //Manual Override for Arm Up
     new JoystickButton(m_buttonBoard, OIConstants.kButtonArmUp)
     .debounce(0.1)
-    .onTrue(new RunCommand(
+    .onTrue(new InstantCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle+1, LiftSubsystem.m_wristTargetAngle)
     ));
 
     //Manual Override for Arm Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonArmDown)
     .debounce(0.1)
-    .onTrue(new RunCommand(
+    .onTrue(new InstantCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle-1, LiftSubsystem.m_wristTargetAngle)
     ));
 
     //Manual Override Wrist Up
     new JoystickButton(m_buttonBoard, OIConstants.kButtonWristUp)
     //.debounce(0.5)
-    .onTrue(new RunCommand(
+    .onTrue(new InstantCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle+1)
     ));
 
     //Manual Override Wrist Down
     new JoystickButton(m_buttonBoard, OIConstants.kButtonWristDown)
     //.debounce(0.1)
-    .onTrue(new RunCommand(
+    .onTrue(new InstantCommand(
       () -> m_lift.setPosition(LiftSubsystem.m_elevatorTargetHeight, LiftSubsystem.m_armTargetAngle, LiftSubsystem.m_wristTargetAngle-1)
     ));
     
